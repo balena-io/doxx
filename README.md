@@ -1,38 +1,19 @@
-Resin.io Documentation
+Doxx — static docs generator
 ======================
 
-[![Build status](https://ci.appveyor.com/api/projects/status/qbsivehgnq0vyrrb?svg=true)](https://ci.appveyor.com/project/fedealconada/resin-docs)
+> **Work in Progress!** This is currently a WIP project. Originally created as part of the Resin.io documentation repository, the code is currently being extracted and generalized. After it's done the original repository will start using this project as dependency, and this project will be considered production-ready.
 
-Join our online chat at [![Gitter chat](https://badges.gitter.im/resin-io/chat.png)](https://gitter.im/resin-io/chat)
+Doxx is an opinionated but flexible static generator for technical documentation.
 
-Documentation for the [Resin.io](https://resin.io/) platform.
+Doxx was created at Resin.io to address some unique features we needed from our docs:
+* author docs in Markdown,
+* use Handlebars templates inside of the docs files, with support for partials (DRY FTW),
+* generate "dynamic" pages by expanding the skeleton page over a combination of parameters, and be able to override parts of such pages for specific params combinations,
+* use powerful templating language (Swig in our case) for pages layouts,
+* generate static docs, but also be able to reuse the same layouts for a couple of dynamic routes (like server-rendered search results),
+* easily define navigation tree using the simple plain-text format,
+* easily render breadcrumbs that reflect the page position in the navigation tree.
 
-Role
-----
-
-The intention of this repo is to provide our public-facing documentation.
-
-
-Running locally
----------------
-
-To run the docs web application locally you should do the following:
-
-```sh
-git clone https://github.com/resin-io/docs
-cd docs
-npm install
-npm start
-```
-And then open [http://localhost:3000](http://localhost:3000).
-
-Contribute
-----------
-
-- Issue Tracker: [github.com/resin-io/docs/issues](https://github.com/resin-io/docs/issues)
-- Source Code: [github.com/resin-io/docs](https://github.com/resin-io/docs)
-
-If you think something is not documented, or can be improved, don't hesitate in sending a PR!
 
 License
 -------

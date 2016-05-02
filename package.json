@@ -1,7 +1,7 @@
 {
-  "name": "resin-docs",
+  "name": "@resin/doxx",
   "version": "0.0.0",
-  "description": "This repo contains our public-facing documentation.",
+  "description": "Doxx — a static docs generator with dynamic pages support.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -13,8 +13,8 @@
     "type": "git",
     "url": "git://github.com/resin-io/docs.git"
   },
-  "author": "",
-  "license": "BSD-2-Clause",
+  "author": "Eugene Mirotin <eugene@resin.io>",
+  "license": "Apache 2.0",
   "bugs": {
     "url": "https://github.com/resin-io/docs/issues"
   },
