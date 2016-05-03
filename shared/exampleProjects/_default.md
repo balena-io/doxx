@@ -1,1 +1,0 @@
-[TBD] example projects default
