@@ -1,0 +1,153 @@
+LunrIndex = require('./lunr-index')
+ParseNav = require('./parse-nav')
+DynamicPages = require('./dynamic-pages')
+
+{ extractTitleFromText, walkTree, slugify, replacePlaceholders } = require('./util')
+
+skipPrivate = ->
+  return (files, metalsmith, done) ->
+    for file of files
+      if path.parse(file).name.match(/^_/)
+        delete files[file]
+    done()
+
+populateFileMeta = ->
+  extRe = new RegExp("\\.#{config.docsExt}$")
+
+  return (files, metalsmith, done) ->
+    for file of files
+      obj = files[file]
+      obj.title or= extractTitleFromText(obj.contents.toString())
+      obj.improveDocsLink = "#{config.editPageLink}/#{config.docsSourceDir}/#{file}"
+      obj.ref = file
+      obj.selfLink = '/' + file.replace(extRe, '')
+      obj.$links = config.links
+
+    done()
+
+buildSearchIndex = ->
+  console.log('Building search index...')
+  searchIndex = LunrIndex.create()
+
+  return (files, metalsmith, done) ->
+    for file of files
+      obj = files[file]
+      searchIndex.add
+        id: file
+        title: obj.title
+        body: obj.contents.toString()
+    indexFilePath = path.join(root, 'server', 'lunr_index.json')
+    searchIndex.write indexFilePath, (err) ->
+      throw err if err
+      console.log('Successfully finished indexing.')
+      done()
+
+console.log('Building navigation index...')
+navTree = ParseNav.parse()
+
+navByFile = do ->
+  result = {}
+
+  setRefRec = (ref, node, remainingAxes) ->
+    if not remainingAxes?.length
+      return setRef(ref, node)
+    nextAxis = remainingAxes[0]
+    remainingAxes = remainingAxes[1...]
+    for value in dicts.getValues(nextAxis)
+      setRefRec(
+        replacePlaceholders(ref, { "#{nextAxis}": value }),
+        node,
+        remainingAxes
+      )
+
+  setRef = (ref, node) ->
+    return if not ref
+    if ref.match(/\$/)
+      setRefRec(ref, node, dicts.dictNames)
+    else
+      result["#{ref}.#{config.docsExt}"] = node
+
+  setRefs = walkTree
+    visitNode: (node) ->
+      if node.level?
+        setRef(node.ref, node)
+  setRefs(navTree)
+  return result
+
+fixNavTitles = ->
+  fixNavNodeTitle = walkTree
+    visitNode: (node, files) ->
+      if node.level?
+        node.title or= files["#{node.ref}.#{config.docsExt}"]?.title
+        node.slug = slugify(node.title)
+
+  return (files, metalsmith, done) ->
+    fixNavNodeTitle(navTree, files)
+    done()
+
+calcNavParents = ->
+  addNavParents = walkTree
+    visitNode: (node, parents) ->
+      if node.level?
+        node.parents = parents.concat(node)
+    buildNextArgs: (node, parents) ->
+      if node.level?
+        [ parents.concat(node) ]
+      else
+        [ parents ]
+
+  return (files, metalsmith, done) ->
+    addNavParents(navTree, [])
+    done()
+
+# needed because of https://github.com/superwolff/metalsmith-layouts/issues/83
+removeNavBackRefs = ->
+  removeBackRefs = walkTree
+    visitNode: (node) ->
+      delete node.parent
+      delete node.parents
+
+  return (files, metalsmith, done) ->
+    removeBackRefs(navTree)
+    done()
+
+serializeNav = ->
+  return (files, metalsmith, done) ->
+    filename = path.join(root, 'server', 'nav.json')
+    fs.writeFile filename, JSON.stringify(navTree), (err) ->
+      throw err if err
+      console.log('Successfully serialized navigation tree.')
+    done()
+
+setBreadcrumbs = ->
+  setBreadcrumbsForFile = (file, obj) ->
+    navNode = navByFile[file]
+    obj.breadcrumbs = navNode?.parents
+      .map (node) -> node.title
+    # TODO: this logic is twisted and should be improved
+    if navNode?.isDynamic and obj.breadcrumbs?.length
+      obj.breadcrumbs[obj.breadcrumbs.length - 1] =
+        hbHelper.render(navNode.titleTemplate, obj)
+  return (files, metalsmith, done) ->
+    for file of files
+      setBreadcrumbsForFile(file, files[file])
+    done()
+
+setNavPaths = ->
+  setPathForFile = (file, obj) ->
+    if navPath = navByFile[file]?.parents
+      obj.navPath = {}
+      for node in navPath
+        if node.link
+          obj.navPath[node.link] = true
+        else
+          obj.navPath[node.slug] = true
+  return (files, metalsmith, done) ->
+    for file of files
+      setPathForFile(file, files[file])
+    done()
+
+expandDynamicPages = ->
+  return (files, metalsmith, done) ->
+    DynamicPages.expand(files)
+    done()

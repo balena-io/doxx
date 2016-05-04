@@ -1,2 +1,2 @@
 require('coffee-script/register')
-require('./server')
+module.exports = require('./lib')
