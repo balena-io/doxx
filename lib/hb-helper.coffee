@@ -3,7 +3,7 @@ Handlebars = require('handlebars')
 { stringifyPairs } = require('./util')
 
 exports.compileTemplate = compileTemplate = _.memoize (tpl) ->
-  Handlebars.compile(tpl)
+  return Handlebars.compile(tpl)
 
 exports.render = (template, context) ->
   compiled = compileTemplate(template)
@@ -12,7 +12,7 @@ exports.render = (template, context) ->
 exports.getPartial = getPartial = _.memoize (key) ->
   partial = Handlebars.partials[key]
   return if not partial
-  compileTemplate(partial)
+  return compileTemplate(partial)
 
 exports.getBestPartial = getBestPartial = (prefix, options, sep = '/') ->
   for option in options

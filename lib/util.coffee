@@ -41,3 +41,10 @@ exports.replacePlaceholders = (arg, context) ->
     re = new RegExp(_.escapeRegExp(key), 'g')
     arg = arg.replace(re, value)
   return arg
+
+exports.refToFilename = (ref, ext) ->
+  "#{ref}.#{ext}"
+
+exports.filenameToRef = (filename, ext) ->
+  extRe = new RegExp("\\.#{ext}$")
+  return filename.replace(extRe, '')

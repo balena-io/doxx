@@ -6,6 +6,7 @@ defaultConfig =
   sourceDir: 'pages'
   destDir: 'contents'
   templatesDir: 'templates'
+  defaultTemplate: 'default.html'
   partialsDir: 'shared'
   metaExtra: null
   layoutLocals: null

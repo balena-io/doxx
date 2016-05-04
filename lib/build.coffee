@@ -22,11 +22,12 @@ consolidate.requires.swig = swigHelper.swig
 
 module.exports = (userConfig, cb) ->
   config = getConfig(userConfig)
+  plugins = plugins(config)
 
   console.log('Building static HTML...')
   metalsmith = Metalsmith(root)
-  .source(config.docsSourceDir)
-  .destination(config.docsDestDir)
+  .source(config.sourceDir)
+  .destination(config.destDir)
 
   use = (condition, plugin, pluginArgs...) ->
     if condition
@@ -41,23 +42,23 @@ module.exports = (userConfig, cb) ->
   use(true, plugins.setNavPaths)
   use(true, plugins.buildSearchIndex)
   use(true, inplace, {
-    engine: 'handlebars',
-    pattern: '**/*.md',
-    partials: 'shared'
+    engine: 'handlebars'
+    pattern: '**/*.' + config.docsExt
+    partials: config.sharedDir
   })
 
   use(true, markdown)
   use(true, permalinks)
 
   use(true, plugins.removeNavBackRefs)
-  use(true, plugins.serializeNav)
+  use(config.serializeNav, plugins.serializeNav)
 
   use(true, headings, 'h2')
 
   use(true, layouts, {
-    engine: 'swig',
-    directory: 'templates',
-    default: 'default.html',
+    engine: 'swig'
+    directory: config.templatesDir
+    default: config.defaultTemplate
     locals: _.assign({ nav: navTree }, config.templateLocals)
   })
 

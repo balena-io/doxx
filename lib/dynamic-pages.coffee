@@ -1,11 +1,10 @@
 path = require('path')
 _ = require('lodash')
 
-config = require('../config')
 dicts = require('./dictionaries')
 hbHelper = require('./hb-helper')
 
-{ replacePlaceholders } = require('./util')
+{ replacePlaceholders, refToFilename, filenameToRef } = require('./util')
 
 tokenizeSwitchText = (text) ->
   return if not text
@@ -19,12 +18,11 @@ tokenizeSwitchText = (text) ->
   result.push(text.substring(start).trim())
   return result
 
-buildSinglePage = (templateObj, dynamicMeta, axesContext) ->
+buildSinglePage = (templateObj, dynamicMeta, axesContext, config) ->
   { url, partials_search: partialsSearchOrder, switch_text: switchText } = dynamicMeta
 
-  extRe = new RegExp("\\.#{config.docsExt}$")
-  baseUrl = templateObj.originalRef
-    .replace(extRe, '')
+
+  baseUrl = filenameToRef(templateObj.originalRef, config.docsExt)
   context = _.assign({}, axesContext, {
     $baseUrl: baseUrl
   })
@@ -50,12 +48,12 @@ buildSinglePage = (templateObj, dynamicMeta, axesContext) ->
     $switch_text: tokenizeSwitchText(switchText)
   })
 
-  key = "#{populate(url)}.#{config.docsExt}"
+  key = refToFilename(populate(url), config.docsExt)
   return { "#{key}": obj }
 
-buildPagesRec = (templateObj, dynamicMeta, axesContext, remainingAxes) ->
+buildPagesRec = (templateObj, dynamicMeta, axesContext, remainingAxes, config) ->
   if not remainingAxes?.length
-    return buildSinglePage(templateObj, dynamicMeta, axesContext)
+    return buildSinglePage(templateObj, dynamicMeta, axesContext, config)
 
   result = {}
   nextAxis = remainingAxes[0]
@@ -74,11 +72,12 @@ buildPagesRec = (templateObj, dynamicMeta, axesContext, remainingAxes) ->
       nextTemplateObj,
       dynamicMeta,
       nextContext,
-      remainingAxes
+      remainingAxes,
+      config
     ))
   return result
 
-buildDynamicPages = (originalRef, templateObj) ->
+buildDynamicPages = (originalRef, templateObj, config) ->
   console.log("Expanding dynamic page #{originalRef}")
   templateObj = _.assign({ originalRef }, templateObj)
   dynamicMeta = templateObj.dynamic_page
@@ -92,12 +91,12 @@ buildDynamicPages = (originalRef, templateObj) ->
     if not dict
       throw new Error("Unknown dictionary \"#{dictName}\".")
     templateObj["#{axisName}_dictionary"] = dict
-  return buildPagesRec(templateObj, dynamicMeta, {}, axesNames)
+  return buildPagesRec(templateObj, dynamicMeta, {}, axesNames, config)
 
-exports.expand = (files) ->
+exports.expand = (files, config) ->
   for file of files
     obj = files[file]
     if not obj.dynamic_page
       continue
     delete files[file]
-    _.assign(files, buildDynamicPages(file, obj))
+    _.assign(files, buildDynamicPages(file, obj, config))
