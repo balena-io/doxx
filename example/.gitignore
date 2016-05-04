@@ -1,0 +1,4 @@
+contents/
+bower_components/
+server/nav.json
+server/lunr_index.json

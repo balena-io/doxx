@@ -1,8 +1,4 @@
-contents/
-static/bower_components/
 node_modules/
-server/nav.json
-server/lunr_index.json
 npm-debug.log
 
 .#*
