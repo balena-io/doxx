@@ -4,7 +4,7 @@ _ = require('lodash')
 
 fixLinks = walkTree
   visitNode: (node) ->
-    if node.level and not node.link
+    if not node.link
       if not node.children?.length
         throw new Error("No link and no child lines. #{node.raw}")
       node.isGateway = true
@@ -12,10 +12,9 @@ fixLinks = walkTree
 
 calcRefs = walkTree
   visitNode: (node) ->
-    if node.level
-      { link } = node
-      ref = if link[0] is '/' then link[1..] else null
-      node.ref = ref
+    { link } = node
+    ref = if link and link[0] is '/' then link[1..] else null
+    node.ref = ref
 
     if node.level? and not node.ref and not node.title
       throw new Error("No title for external link node. #{node.raw}")
@@ -85,7 +84,7 @@ exports.parse = (config) ->
 ppNode = walkTree
   visitNode: (node, indent = '') ->
     title = node.title or '(No title)'
-    link = if node.level then "[#{node.link}]" else ''
+    link = if node.link then "[#{node.link}]" else ''
     console.log "#{indent}|--#{title}#{link}"
   buildNextArgs: (node, indent = '') ->
     [ indent + '|  ' ]
