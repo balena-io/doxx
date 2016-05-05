@@ -9,7 +9,7 @@
         {% endif %}
         <li class="{% if isCurrentLink %}active{% endif %}">
           <a href="{{ child|getLink(selfLink) }}">
-            {{ child|getTitle(selfLink, breadcrumbs[breadcrumbs.length - 1]) }}
+            {{ child|getTitle(selfLink, navPath, breadcrumbs[breadcrumbs.length - 1]) }}
           </a>
         </li>
         {% if isCurrentLink and !child.isGateway and headings %}
@@ -32,10 +32,10 @@
     {% for subtree in subtrees %}
       <h3 class="
         {% if subtree.children %}with-children{% endif %}
-        {% if navPath[subtree.link] %}active{% endif %}
+        {% if navPath[subtree.$id] %}active{% endif %}
       ">
         <a href="{{ subtree|getLink(selfLink) }}">
-          {{ subtree|getTitle(selfLink, breadcrumbs[breadcrumbs.length - 1]) }}
+          {{ subtree|getTitle(selfLink, navPath, breadcrumbs[breadcrumbs.length - 1]) }}
         </a>
       </h3>
       {{ navNode(subtree) }}
@@ -47,7 +47,7 @@
   <ul class="nav nav-tabs nav-justified">
     {# todo: remove duplication here and below #}
     {% for navTree in nav.children %}
-      {% if (navPath && navPath[navTree.slug]) || (!navPath && loop.first) %}
+      {% if (navPath && navPath[navTree.$id]) || (!navPath && loop.first) %}
         {% set isActive = true %}
       {% else %}
         {% set isActive = false %}
@@ -62,7 +62,7 @@
 
   <div class="tab-content">
     {% for navTree in nav.children %}
-      {% if (navPath && navPath[navTree.slug]) || (!navPath && loop.first) %}
+      {% if (navPath && navPath[navTree.$id]) || (!navPath && loop.first) %}
         {% set isActive = true %}
       {% else %}
         {% set isActive = false %}

@@ -13,11 +13,19 @@ fixLinks = walkTree
 calcRefs = walkTree
   visitNode: (node) ->
     { link } = node
-    ref = if link and link[0] is '/' then link[1..] else null
-    node.ref = ref
+    if link and link[0] is '/'
+      node.ref = link[1..]
 
     if node.level? and not node.ref and not node.title
       throw new Error("No title for external link node. #{node.raw}")
+
+calcIds = (rootNode, rootId) ->
+  setId = (node, id) ->
+    node.$id = id
+    if node.children
+      for child, i in node.children
+        setId(child, "#{id}.#{i + 1}")
+  setId(rootNode, rootId)
 
 exports.parse = (config) ->
   lines = fs.readFileSync(config.parseNav)
@@ -78,6 +86,7 @@ exports.parse = (config) ->
 
   fixLinks(result)
   calcRefs(result)
+  calcIds(result, '$0')
 
   return result
 
@@ -91,3 +100,6 @@ ppNode = walkTree
 
 exports.pp = (tree) ->
   ppNode(tree)
+
+exports.serialize = (tree, path) ->
+  return

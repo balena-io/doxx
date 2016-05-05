@@ -11,12 +11,19 @@ inplace = require('metalsmith-in-place')
 headings = require('metalsmith-headings')
 Plugins = require('./metalsmith-plugins')
 
+Nav = require('./nav')
 SwigHelper = require('./swig-helper')
 HbHelper = require('./hb-helper')
 
 module.exports = (cb) ->
   config = this.config
-  plugins = Plugins(config)
+
+  navTree = null
+  if config.parseNav
+    navTree = Nav.parse(config)
+
+  plugins = Plugins(config, navTree)
+
   SwigHelper.register(consolidate, config)
   HbHelper.register(consolidate, config)
 
@@ -34,6 +41,7 @@ module.exports = (cb) ->
   use(true, plugins.populateFileMeta)
   use(config.parseNav, plugins.parseNav)
   use(config.parseNav, plugins.populateFileNavMeta)
+  use(config.serializeNav, plugins.serializeNav)
 
   use(true, inplace, {
     engine: 'handlebars'
@@ -51,10 +59,9 @@ module.exports = (cb) ->
     engine: 'swig'
     directory: config.templatesDir
     default: config.defaultTemplate
-    locals: _.assign({ nav: plugins.navTree }, config.templateLocals)
+    locals: _.assign({ nav: navTree }, config.templateLocals)
   })
 
-  use(config.serializeNav, plugins.serializeNav)
 
   metalsmith.build (err) ->
     return cb(err) if err

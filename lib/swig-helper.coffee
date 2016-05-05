@@ -5,9 +5,11 @@ consolidate = require('consolidate')
 
 { replacePlaceholders } = require('./util')
 
-isCurrentPage = (navNode, selfLink) ->
+isCurrentPage = (navNode, selfLink, navPath) ->
   if navNode.isDynamic
     return selfLink.match(navNode.linkRe)
+  if navPath
+    return navPath[navNode.$id]
   return selfLink is navNode.link
 
 populateDynamic = (template, axesValues, defaults) ->
@@ -19,20 +21,20 @@ exports.register = (consolidate, config) ->
 
   swig.setFilter 'isCurrentPage', isCurrentPage
 
-  swig.setFilter 'getLink', (navNode, selfLink) ->
-    if isCurrentPage(navNode, selfLink)
+  swig.setFilter 'getLink', (navNode, selfLink, navPath) ->
+    if isCurrentPage(navNode, selfLink, navPath)
       return selfLink
     else
       return populateDynamic(navNode.link, null, dicts.getDefaults())
 
-  swig.setFilter 'getTitle', (navNode, selfLink, title) ->
-    if isCurrentPage(navNode, selfLink) and navNode.isDynamic
+  swig.setFilter 'getTitle', (navNode, selfLink, navPath, title) ->
+    if isCurrentPage(navNode, selfLink, navPath) and navNode.isDynamic
       return title
     else
       return navNode.title
 
   swig.setFilter 'isCurrentTree', (navNode, navPath) ->
-    return navPath[navNode.link]
+    return navPath[navNode.$id]
 
   consolidate.requires.swig = swig
 
