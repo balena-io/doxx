@@ -11,20 +11,16 @@ inplace = require('metalsmith-in-place')
 headings = require('metalsmith-headings')
 plugins = require('./metalsmith-plugins')
 
-swigHelper = require('./swig-helper')
-hbHelper = require('./hb-helper')
+SwigHelper = require('./swig-helper')
+HbHelper = require('./hb-helper')
 
-getConfig = require('./config')
-dicts = require('./dictionaries')
-
-consolidate.requires.handlebars = hbHelper.Handlebars
-consolidate.requires.swig = swigHelper.swig
-
-module.exports = (userConfig, cb) ->
-  config = getConfig(userConfig)
+module.exports = (cb) ->
+  config = this.config
   plugins = plugins(config)
+  SwigHelper.register(consolidate)
+  HbHelper.register(consolidate)
 
-  console.log('Building static HTML...')
+  console.log('Building HTML...')
   metalsmith = Metalsmith(root)
   .source(config.sourceDir)
   .destination(config.destDir)
@@ -36,22 +32,19 @@ module.exports = (userConfig, cb) ->
   use(true, plugins.skipPrivate)
   use(true, plugins.expandDynamicPages)
   use(true, plugins.populateFileMeta)
-  use(true, plugins.fixNavTitles)
-  use(true, plugins.calcNavParents)
-  use(true, plugins.setBreadcrumbs)
-  use(true, plugins.setNavPaths)
-  use(true, plugins.buildSearchIndex)
+  use(config.parseNav, plugins.parseNav)
+  use(config.parseNav, plugins.populateFileNavMeta)
+  use(config.serializeNav, plugins.serializeNav)
+
   use(true, inplace, {
     engine: 'handlebars'
     pattern: '**/*.' + config.docsExt
     partials: config.sharedDir
   })
+  use(config.buildLunrIndex, plugins.buildSearchIndex)
 
   use(true, markdown)
   use(true, permalinks)
-
-  use(true, plugins.removeNavBackRefs)
-  use(config.serializeNav, plugins.serializeNav)
 
   use(true, headings, 'h2')
 

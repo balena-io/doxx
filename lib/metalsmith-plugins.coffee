@@ -2,11 +2,14 @@ _ = require('lodash')
 LunrIndex = require('./lunr-index')
 ParseNav = require('./parse-nav')
 DynamicPages = require('./dynamic-pages')
+Dicts = require('./dictionaries')
+HbHelper = require('./hb-helper')
 
 { extractTitleFromText, walkTree, slugify, replacePlaceholders,
   filenameToRef, refToFilename, getValue } = require('./util')
 
 module.exports = (config) ->
+  dicts = Dicts(config)
   exports = {}
 
   exports.skipPrivate = ->
@@ -22,7 +25,7 @@ module.exports = (config) ->
         obj = files[file]
         obj.title or= extractTitleFromText(obj.contents.toString())
         obj.ref = file
-        obj.selfLink = '/' + filenameToRef(file)
+        obj.selfLink = '/' + filenameToRef(file, config.docsExt)
         _.assign(obj, getValue(config.metaExtra, file, obj))
 
       done()
@@ -44,12 +47,10 @@ module.exports = (config) ->
         console.log('Successfully finished indexing.')
         done()
 
-  console.log('Building navigation index...')
-  navTree = ParseNav.parse()
+  navTree = null
+  navByFile = null
 
-  navByFile = do ->
-    result = {}
-
+  exports.parseNav = ->
     setRefRec = (ref, node, remainingAxes) ->
       if not remainingAxes?.length
         return setRef(ref, node)
@@ -67,27 +68,19 @@ module.exports = (config) ->
       if ref.match(/\$/)
         setRefRec(ref, node, dicts.dictNames)
       else
-        result["#{ref}.#{config.docsExt}"] = node
+        navByFile[refToFilename(ref, config.docsExt)] = node
 
     setRefs = walkTree
       visitNode: (node) ->
         if node.level?
           setRef(node.ref, node)
-    setRefs(navTree)
-    return result
 
-  exports.fixNavTitles = ->
-    fixNavNodeTitle = walkTree
+    fixNavNodeTitleAndSetSlug = walkTree
       visitNode: (node, files) ->
         if node.level?
-          node.title or= files["#{node.ref}.#{config.docsExt}"]?.title
+          node.title or= files[refToFilename(node.ref, config.docsExt)]?.title
           node.slug = slugify(node.title)
 
-    return (files, metalsmith, done) ->
-      fixNavNodeTitle(navTree, files)
-      done()
-
-  exports.calcNavParents = ->
     addNavParents = walkTree
       visitNode: (node, parents) ->
         if node.level?
@@ -99,11 +92,21 @@ module.exports = (config) ->
           [ parents ]
 
     return (files, metalsmith, done) ->
+      console.log('Parsing navigation...')
+
+      navTree = ParseNav.parse()
+      fixNavNodeTitleAndSetSlug(navTree, files)
       addNavParents(navTree, [])
+
+      navByFile = {}
+      setRefs(navTree)
+
+      console.log('Navigation parsed and indexed.')
       done()
 
-  # needed because of https://github.com/superwolff/metalsmith-layouts/issues/83
-  exports.removeNavBackRefs = ->
+  exports.serializeNav = ->
+    # needed because of
+    # https://github.com/superwolff/metalsmith-layouts/issues/83
     removeBackRefs = walkTree
       visitNode: (node) ->
         delete node.parent
@@ -111,17 +114,15 @@ module.exports = (config) ->
 
     return (files, metalsmith, done) ->
       removeBackRefs(navTree)
-      done()
 
-  exports.serializeNav = ->
-    return (files, metalsmith, done) ->
       filename = config.serializeNav
       fs.writeFile filename, JSON.stringify(navTree), (err) ->
         throw err if err
         console.log('Successfully serialized navigation tree.')
       done()
 
-  exports.setBreadcrumbs = ->
+  exports.populateFileNavMeta = ->
+
     setBreadcrumbsForFile = (file, obj) ->
       navNode = navByFile[file]
       obj.breadcrumbs = navNode?.parents
@@ -129,13 +130,8 @@ module.exports = (config) ->
       # TODO: this logic is twisted and should be improved
       if navNode?.isDynamic and obj.breadcrumbs?.length
         obj.breadcrumbs[obj.breadcrumbs.length - 1] =
-          hbHelper.render(navNode.titleTemplate, obj)
-    return (files, metalsmith, done) ->
-      for file of files
-        setBreadcrumbsForFile(file, files[file])
-      done()
+          HbHelper.render(navNode.titleTemplate, obj)
 
-  exports.setNavPaths = ->
     setPathForFile = (file, obj) ->
       if navPath = navByFile[file]?.parents
         obj.navPath = {}
@@ -144,12 +140,15 @@ module.exports = (config) ->
             obj.navPath[node.link] = true
           else
             obj.navPath[node.slug] = true
+
     return (files, metalsmith, done) ->
       for file of files
-        setPathForFile(file, files[file])
+        obj = files[file]
+        setPathForFile(file, obj)
+        setBreadcrumbsForFile(file, obj)
       done()
 
   exports.expandDynamicPages = ->
     return (files, metalsmith, done) ->
-      DynamicPages.expand(files)
+      DynamicPages.expand(files, config)
       done()

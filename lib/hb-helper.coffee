@@ -30,6 +30,7 @@ exports.importHelper = importHelper = (prefix) ->
     Partials search: #{this.$partials_search?.join(', ')}.
   """)
 
-Handlebars.registerHelper 'import', importHelper
+exports.register = (consolidate) ->
+  Handlebars.registerHelper 'import', importHelper
 
-exports.Handlebars = Handlebars
+  consolidate.requires.handlebars = Handlebars

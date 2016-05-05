@@ -1,9 +1,6 @@
 fs = require('fs')
-path = require('path')
 _ = require('lodash')
 { walkTree } = require('./util')
-
-root = path.resolve(__dirname, '..')
 
 fixLinks = walkTree
   visitNode: (node) ->
@@ -24,7 +21,8 @@ calcRefs = walkTree
       throw new Error("No title for external link node. #{node.raw}")
 
 exports.parse = ->
-  lines = fs.readFileSync(path.join(root, 'config', 'navigation.txt'))
+  config = this.config
+  lines = fs.readFileSync(config.parseNav)
   .toString()
   .split('\n')
   .map (s) -> s.trimRight()
@@ -93,5 +91,5 @@ ppNode = walkTree
   buildNextArgs: (node, indent = '') ->
     [ indent + '|  ' ]
 
-exports.pp = (parsed) ->
-  ppNode(parsed)
+exports.pp = (tree) ->
+  ppNode(tree)
