@@ -1,0 +1,18 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Doxx</a>
+    </div>
+    <div>
+      <ul class="nav navbar-nav navbar-right">
+        {% for menuItem in menuLinks %}
+          <li>
+            <a href="{{ menuItem.link }}" target="_blank">
+              {{ menuItem.title }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</nav>

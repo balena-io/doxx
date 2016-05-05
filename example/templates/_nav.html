@@ -1,0 +1,45 @@
+{% macro navNode(subtree) %}
+  {% if subtree.children and subtree|isCurrentTree(navPath) %}
+    <ul>
+      {% for child in subtree.children %}
+        {% if child|isCurrentPage(selfLink) %}
+          {% set isCurrentLink = true %}
+        {% else %}
+          {% set isCurrentLink = false %}
+        {% endif %}
+        <li class="{% if isCurrentLink %}active{% endif %}">
+          <a href="{{ child|getLink(selfLink) }}">
+            {{ child|getTitle(selfLink, navPath, breadcrumbs[breadcrumbs.length - 1]) }}
+          </a>
+        </li>
+        {% if isCurrentLink and !child.isGateway and headings %}
+          <div class="in-page-nav">
+            <ul class="expand nav">
+              {% for heading in headings %}
+                <li><a href="#{{ heading.id }}">{{ heading.text }}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+        {{ navNode(child) }}
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endmacro %}
+
+{% macro navRoot(subtrees) %}
+  <div class="nav-menu">
+    {% for subtree in subtrees %}
+      <h5 class="{% if navPath[subtree.$id] %}active{% endif %}">
+        <a href="{{ subtree|getLink(selfLink) }}">
+          {{ subtree|getTitle(selfLink, navPath, breadcrumbs[breadcrumbs.length - 1]) }}
+        </a>
+      </h5>
+      {{ navNode(subtree) }}
+    {% endfor %}
+  </div>
+{% endmacro %}
+
+<nav class="site-navigation">
+  {{ navRoot(nav.children) }}
+</nav>

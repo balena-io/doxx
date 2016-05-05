@@ -1,0 +1,40 @@
+{
+  "name": "@resin.io/doxx",
+  "version": "0.1.0",
+  "description": "Doxx — a static docs generator with dynamic pages support.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "doxx": "./doxx.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/resin-io-projects/doxx.git"
+  },
+  "author": "Eugene Mirotin <eugene@resin.io>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/resin-io-projects/doxx/issues"
+  },
+  "homepage": "https://github.com/resin-io-projects/doxx",
+  "dependencies": {
+    "coffee-script": "^1.10.0",
+    "consolidate": "^0.14.0",
+    "handlebars": "^4.0.5",
+    "lodash": "^4.11.1",
+    "lunr": "^0.7.0",
+    "metalsmith": "^2.1.0",
+    "metalsmith-headings": "^0.1.0",
+    "metalsmith-in-place": "^1.4.3",
+    "metalsmith-layouts": "^1.6.4",
+    "metalsmith-markdown": "^0.2.1",
+    "metalsmith-permalinks": "^0.5.0",
+    "swig": "^1.4.2"
+  },
+  "devDependencies": {
+    "watch": "^0.17.1",
+    "express": "~4.11.0"
+  }
+}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Doxx Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.png" />
+
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400italic,400,600|Montserrat:400,600">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="/main.css">
+  </head>
+  <body data-spy="scroll" data-target=".in-page-nav">
+    {% include "_top-menu.html" %}
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="sidebar" data-spy="affix" data-offset-top="60" data-offset-bottom="200">
+            <div class="search-wrapper">
+              {% include "_search-form.html" %}
+            </div>
+            {% include "_nav.html" %}
+          </div>
+        </div>
+
+        <article class="col-md-9">
+          <div class="header-wrapper">
+            {% include "_breadcrumbs.html" %}
+          </div>
+          {% if dynamic_page and $switch_text %}
+            <div class="dynamic-switch well">
+              {% include "_dynamic-switch.html" %}
+            </div>
+          {% endif %}
+          <section class="page-content">
+            {% block "contents" %}
+              {{ contents|safe }}
+            {% endblock %}
+          </section>
+        </article>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+    <script src="/main.js"></script>
+  </body>
+</html>
