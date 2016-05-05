@@ -44,9 +44,9 @@ module.exports = (userConfig) ->
     if not config[key]
       throw new Error("The key #{key} is required for Doxx config")
 
-  for key in pathKeys
+  ###for key in pathKeys
     if config[key]
-      config[key] = path.resolve(config.rootDir, config[key])
+      config[key] = path.resolve(config.rootDir, config[key])###
 
   if config.serializeNav and not config.parseNav
     throw new Error("parseNav key is required when serializeNav is defined in Doxx config")

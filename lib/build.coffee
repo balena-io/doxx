@@ -21,7 +21,7 @@ module.exports = (cb) ->
   HbHelper.register(consolidate)
 
   console.log('Building HTML...')
-  metalsmith = Metalsmith(root)
+  metalsmith = Metalsmith(config.rootDir)
   .source(config.sourceDir)
   .destination(config.destDir)
 
@@ -39,7 +39,7 @@ module.exports = (cb) ->
   use(true, inplace, {
     engine: 'handlebars'
     pattern: '**/*.' + config.docsExt
-    partials: config.sharedDir
+    partials: config.partialsDir
   })
   use(config.buildLunrIndex, plugins.buildSearchIndex)
 
@@ -52,7 +52,7 @@ module.exports = (cb) ->
     engine: 'swig'
     directory: config.templatesDir
     default: config.defaultTemplate
-    locals: _.assign({ nav: navTree }, config.templateLocals)
+    locals: _.assign({ nav: plugins.navTree }, config.templateLocals)
   })
 
   metalsmith.build (err) ->
