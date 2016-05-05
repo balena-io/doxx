@@ -20,8 +20,7 @@ calcRefs = walkTree
     if node.level? and not node.ref and not node.title
       throw new Error("No title for external link node. #{node.raw}")
 
-exports.parse = ->
-  config = this.config
+exports.parse = (config) ->
   lines = fs.readFileSync(config.parseNav)
   .toString()
   .split('\n')

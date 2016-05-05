@@ -39,4 +39,4 @@ exports.configureExpress = (app, config) ->
   exports.register(consolidate)
   app.engine('html', consolidate.swig)
   app.set('view engine', 'html')
-  app.set('views', config.templatesDir))
+  app.set('views', config.templatesDir)

@@ -1,17 +1,21 @@
 _ = require('lodash')
 getConfig = require('./config')
 SwigHelper = require('./swig-helper')
- = require('./lunr-search')
+LunrSearch = require('./lunr-search')
+Nav = require('./nav')
 
 Doxx = (config) ->
   if not (this instanceof Doxx)
     return new Doxx(arguments...)
 
-  this.config = getConfig(userConfig)
+  this.config = getConfig(config)
+  return
 
 Doxx::build = require('./build')
-Doxx::navParse = require('./nav').parse
-Doxx.navPP = require('./nav').pp
+
+Doxx::navParse = ->
+  Nav.parse(this.config)
+Doxx.navPP = Nav.pp
 
 Doxx::configureExpress = (app) ->
   SwigHelper.configureExpress(app, this.config)

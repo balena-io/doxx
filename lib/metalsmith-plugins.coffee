@@ -1,6 +1,6 @@
 _ = require('lodash')
 LunrIndex = require('./lunr-index')
-ParseNav = require('./parse-nav')
+Nav = require('./nav')
 DynamicPages = require('./dynamic-pages')
 Dicts = require('./dictionaries')
 HbHelper = require('./hb-helper')
@@ -94,7 +94,7 @@ module.exports = (config) ->
     return (files, metalsmith, done) ->
       console.log('Parsing navigation...')
 
-      navTree = ParseNav.parse()
+      navTree = Nav.parse(config)
       fixNavNodeTitleAndSetSlug(navTree, files)
       addNavParents(navTree, [])
 

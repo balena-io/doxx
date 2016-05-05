@@ -1,9 +1,9 @@
 path = require('path')
 express = require('express')
 _ = require('lodash')
-search = require('./search')
+
 navTree = require('./nav.json')
-config = require('../config')
+config = require('./config')
 
 Doxx = require('..')
 doxxConfig = require('../config/doxx')

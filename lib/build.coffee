@@ -9,14 +9,14 @@ permalinks = require('metalsmith-permalinks')
 layouts = require('metalsmith-layouts')
 inplace = require('metalsmith-in-place')
 headings = require('metalsmith-headings')
-plugins = require('./metalsmith-plugins')
+Plugins = require('./metalsmith-plugins')
 
 SwigHelper = require('./swig-helper')
 HbHelper = require('./hb-helper')
 
 module.exports = (cb) ->
   config = this.config
-  plugins = plugins(config)
+  plugins = Plugins(config)
   SwigHelper.register(consolidate)
   HbHelper.register(consolidate)
 

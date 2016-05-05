@@ -9,14 +9,17 @@ KNOWN_EXTS = [
 ]
 
 Dicts = (config) ->
-  extsRe = new RegExp("\\.(#{KNOWN_EXTS.join('|')})$")
   dir = config.dictionariesDir
 
-  files = fs.readdirSync(path.resolve(__dirname, dir))
-    .filter (file) -> file.match(extsRe)
-    .map (file) ->
-      ext = path.extname(file)
-      return path.basename(file, ext)
+  if dir
+    extsRe = new RegExp("\\.(#{KNOWN_EXTS.join('|')})$")
+    files = fs.readdirSync(path.resolve(__dirname, dir))
+      .filter (file) -> file.match(extsRe)
+      .map (file) ->
+        ext = path.extname(file)
+        return path.basename(file, ext)
+  else
+    files = []
 
   dicts = {}
 

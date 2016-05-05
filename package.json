@@ -4,7 +4,6 @@
   "description": "Doxx — a static docs generator with dynamic pages support.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch-pages": "watch 'coffee ./lib/build.coffee' pages shared templates"
   },
