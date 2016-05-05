@@ -8,7 +8,6 @@ HbHelper = require('./hb-helper')
 
 exports.expand = (files, config) ->
   dicts = Dicts(config)
-
   tokenizeSwitchText = (text) ->
     return if not text
     result = []
@@ -94,7 +93,7 @@ exports.expand = (files, config) ->
         throw new Error("Axis name must start with $ sign \"#{axisName}\".")
       dict = dicts.getDict(axisName)
       if not dict
-        throw new Error("Unknown dictionary \"#{dictName}\".")
+        throw new Error("Unknown dictionary \"#{axisName}\".")
       templateObj["#{axisName}_dictionary"] = dict
     return buildPagesRec(templateObj, dynamicMeta, {}, axesNames)
 

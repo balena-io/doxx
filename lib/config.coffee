@@ -8,6 +8,7 @@ defaultConfig =
   templatesDir: 'templates'
   defaultTemplate: 'default.html'
   partialsDir: 'shared'
+  dictionariesDir: true
   metaExtra: null
   layoutLocals: null
 
@@ -17,11 +18,7 @@ defaultConfigOptional =
   serializeNav: 'nav.json'
   buildLunrIndex: 'lunr_index.json'
 
-pathKeys = [
-  'sourceDir'
-  'destDir'
-  'templatesDir'
-  'partialsDir'
+resolvePathKeys = [
   'dictionariesDir'
   'parseNav'
   'serializeNav'
@@ -44,7 +41,7 @@ module.exports = (userConfig) ->
     if not config[key]
       throw new Error("The key #{key} is required for Doxx config")
 
-  for key in pathKeys
+  for key in resolvePathKeys
     if config[key]
       config[key] = path.resolve(config.rootDir, config[key])
 

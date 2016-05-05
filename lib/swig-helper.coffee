@@ -10,19 +10,20 @@ isCurrentPage = (navNode, selfLink) ->
     return selfLink.match(navNode.linkRe)
   return selfLink is navNode.link
 
-populateDynamic = (template, axesValues) ->
-  defaults = dicts.getDefaults()
+populateDynamic = (template, axesValues, defaults) ->
   context = _.assign({}, defaults, axesValues)
-  replacePlaceholders(template, context)
+  return replacePlaceholders(template, context)
 
-exports.register = (consolidate) ->
+exports.register = (consolidate, config) ->
+  dicts = Dicts(config)
+
   swig.setFilter 'isCurrentPage', isCurrentPage
 
   swig.setFilter 'getLink', (navNode, selfLink) ->
     if isCurrentPage(navNode, selfLink)
       return selfLink
     else
-      return populateDynamic(navNode.link)
+      return populateDynamic(navNode.link, null, dicts.getDefaults())
 
   swig.setFilter 'getTitle', (navNode, selfLink, title) ->
     if isCurrentPage(navNode, selfLink) and navNode.isDynamic
@@ -36,7 +37,7 @@ exports.register = (consolidate) ->
   consolidate.requires.swig = swig
 
 exports.configureExpress = (app, config) ->
-  exports.register(consolidate)
+  exports.register(consolidate, config)
   app.engine('html', consolidate.swig)
   app.set('view engine', 'html')
   app.set('views', config.templatesDir)

@@ -17,8 +17,8 @@ HbHelper = require('./hb-helper')
 module.exports = (cb) ->
   config = this.config
   plugins = Plugins(config)
-  SwigHelper.register(consolidate)
-  HbHelper.register(consolidate)
+  SwigHelper.register(consolidate, config)
+  HbHelper.register(consolidate, config)
 
   console.log('Building HTML...')
   metalsmith = Metalsmith(config.rootDir)
@@ -34,7 +34,6 @@ module.exports = (cb) ->
   use(true, plugins.populateFileMeta)
   use(config.parseNav, plugins.parseNav)
   use(config.parseNav, plugins.populateFileNavMeta)
-  use(config.serializeNav, plugins.serializeNav)
 
   use(true, inplace, {
     engine: 'handlebars'
@@ -54,6 +53,8 @@ module.exports = (cb) ->
     default: config.defaultTemplate
     locals: _.assign({ nav: plugins.navTree }, config.templateLocals)
   })
+
+  use(config.serializeNav, plugins.serializeNav)
 
   metalsmith.build (err) ->
     return cb(err) if err
