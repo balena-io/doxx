@@ -6,14 +6,14 @@ navTree = require('./nav.json')
 config = require('./config')
 
 Doxx = require('..')
-doxxConfig = require('../config/doxx')
+doxxConfig = require('./config/doxx')
 
 app = express()
 doxx = Doxx(doxxConfig)
 doxx.configureExpress(app)
 
-staticDir = path.join(__dirname, '..', 'static')
-contentsDir = path.join(__dirname, '..', config.docsDestDir)
+staticDir = path.join(__dirname, 'static')
+contentsDir = path.join(__dirname, config.destDir)
 
 app.use(express.static(staticDir))
 

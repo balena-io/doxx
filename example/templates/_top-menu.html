@@ -1,20 +1,16 @@
-<div class="menu menu--top">
+<nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container">
-    <nav class="menu__nav navbar" role="navigation">
-      <a class="menu__logo navbar-brand" href="{{ mainSiteUrl }}">
-        <span class="logo">
-          <img class="logo__img" src="/img/logo.svg">
-          <span class="logo__text">resin.io</span>
-        </span>
-      </a>
-
-      <ul class="nav navbar-nav navbar-left">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Doxx</a>
+    </div>
+    <div>
+      <ul class="nav navbar-nav">
         {% for menuItem in menuLinks %}
           <li>
             <a href="{{ menuItem.link }}">{{ menuItem.title }}</a>
           </li>
         {% endfor %}
       </ul>
-    </nav>
+    </div>
   </div>
-</div>
+</nav>
