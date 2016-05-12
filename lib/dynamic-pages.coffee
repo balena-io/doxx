@@ -4,7 +4,7 @@ _ = require('lodash')
 Dicts = require('./dictionaries')
 HbHelper = require('./hb-helper')
 
-{ replacePlaceholders, refToFilename, filenameToRef } = require('./util')
+{ replacePlaceholders, refToFilename, filenameToRef, searchOrder } = require('./util')
 
 exports.expand = (files, config) ->
   dicts = Dicts(config)
@@ -20,7 +20,7 @@ exports.expand = (files, config) ->
     result.push(text.substring(start).trim())
     return result
 
-  buildSinglePage = (templateObj, dynamicMeta, axesContext) ->
+  buildSinglePage = (templateObj, dynamicMeta, variablesContext) ->
     {
       url,
       partials_search: partialsSearchOrder,
@@ -28,7 +28,7 @@ exports.expand = (files, config) ->
     } = dynamicMeta
 
     baseUrl = filenameToRef(templateObj.originalRef, config.docsExt)
-    context = _.assign({}, axesContext, {
+    context = _.assign({}, variablesContext, {
       $baseUrl: baseUrl
     })
 
@@ -48,7 +48,7 @@ exports.expand = (files, config) ->
       title: HbHelper.render(templateObj.title, templateObj)
       $partials_search: populate(partialsSearchOrder)
       $dictionaries: dicts
-      $axes_values: axesContext
+      $variables: variablesContext
       $url_template: urlTemplate
       $switch_text: tokenizeSwitchText(switchText)
     })
@@ -56,47 +56,47 @@ exports.expand = (files, config) ->
     key = refToFilename(populate(url), config.docsExt)
     return { "#{key}": obj }
 
-  buildPagesRec = (templateObj, dynamicMeta, axesContext, remainingAxes) ->
-    if not remainingAxes?.length
-      return buildSinglePage(templateObj, dynamicMeta, axesContext)
+  buildPagesRec = (templateObj, dynamicMeta, variablesContext, remainingVariables) ->
+    if not remainingVariables?.length
+      return buildSinglePage(templateObj, dynamicMeta, variablesContext)
 
     result = {}
-    nextAxis = remainingAxes[0]
-    remainingAxes = remainingAxes[1...]
+    [ nextVariable, remainingVariables... ] = remainingVariables
+    if nextVariable?[0] isnt '$'
+      throw new Error("Variable name must start with $ sign \"#{nextVariable}\".")
 
-    nextAxisDict = dicts.getDict(nextAxis)
+    nextVariableDict = dicts.getDict(nextVariable)
+    if not nextVariableDict
+      throw new Error("Unknown dictionary \"#{nextVariable}\".")
+    templateObj["#{nextVariable}_dictionary"] = nextVariableDict
 
-    for details in nextAxisDict
-      nextAxisValue = details.id
+    for details in nextVariableDict
+      nextVariableId = details.id
       nextTemplateObj = _.assign({}, templateObj, {
-        "#{nextAxis}": nextAxisValue
-        "#{nextAxis}_details": details
+        "#{nextVariable}_id": nextVariableId
+        "#{nextVariable}": details
       })
-      nextContext = _.extend({}, axesContext, { "#{nextAxis}": nextAxisValue})
+      nextContext = _.extend({}, variablesContext, { "#{nextVariable}": nextVariableId })
       _.assign(result, buildPagesRec(
         nextTemplateObj,
         dynamicMeta,
         nextContext,
-        remainingAxes
+        remainingVariables
       ))
     return result
 
   buildDynamicPages = (originalRef, templateObj) ->
     console.log("Expanding dynamic page #{originalRef}")
     templateObj = _.assign({ originalRef }, templateObj)
-    dynamicMeta = templateObj.dynamic_page
-    { axes: axesNames } = dynamicMeta
-    if not axesNames
-      throw new Error("No axes defined for the dynamic page #{originalRef}.")
-    for axisName in axesNames
-      if axisName[0] isnt '$'
-        throw new Error("Axis name must start with $ sign \"#{axisName}\".")
-      dict = dicts.getDict(axisName)
-      if not dict
-        throw new Error("Unknown dictionary \"#{axisName}\".")
-      templateObj["#{axisName}_dictionary"] = dict
-    return buildPagesRec(templateObj, dynamicMeta, {}, axesNames)
+    dynamicMeta = _.assign({}, templateObj.dynamic_page)
 
+    { variables: variablesNames } = dynamicMeta
+    if not variablesNames
+      throw new Error("No variables defined for the dynamic page #{originalRef}.")
+
+    dynamicMeta.partials_search ?= searchOrder(variablesNames)
+
+    return buildPagesRec(templateObj, dynamicMeta, {}, variablesNames)
 
   for file of files
     obj = files[file]

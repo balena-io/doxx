@@ -55,16 +55,15 @@ module.exports = (config, navTree) ->
   navByFile = null
 
   exports.parseNav = ->
-    setRefRec = (ref, node, remainingAxes) ->
-      if not remainingAxes?.length
+    setRefRec = (ref, node, remainingVariables) ->
+      if not remainingVariables?.length
         return setRef(ref, node)
-      nextAxis = remainingAxes[0]
-      remainingAxes = remainingAxes[1...]
-      for value in dicts.getValues(nextAxis)
+      [ nextVariable, remainingVariables... ] = remainingVariables
+      for value in dicts.getValues(nextVariable)
         setRefRec(
-          replacePlaceholders(ref, { "#{nextAxis}": value }),
+          replacePlaceholders(ref, { "#{nextVariable}": value }),
           node,
-          remainingAxes
+          remainingVariables
         )
 
     setRef = (ref, node) ->
