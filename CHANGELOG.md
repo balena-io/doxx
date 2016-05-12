@@ -1,3 +1,5 @@
+## 0.2.0
+
 **Breaking**:
 * Axes renamed to Variables
 * `$variable` -> `$variable_id`, `$variable_details` -> `$variable`
