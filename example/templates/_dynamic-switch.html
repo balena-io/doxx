@@ -7,20 +7,14 @@
     {% for entry in dict %}
       <option
         value="{{ entry.id }}"
-        {% if entry.id === currentValue%}selected{% endif %}
-        data-content="
-          {% if entry.icon %}
-            <img src='{{ entry.icon }}' class='dynamic-switch__select__icon'>
-          {% endif %}
-          {{ entry.name }}
-        ">
+        {% if entry.id === currentValue%}selected{% endif %}>
         {{ entry.name }}
       </option>
     {% endfor %}
   </select>
 {% endmacro %}
 
-<div class="form-inline dynamic-switch__form js-dynamic-switch"
+<div class="form-inline js-dynamic-switch"
   data-url-template="{{ $url_template }}">
   <div class="form-group">
     {% for part in $switch_text %}
