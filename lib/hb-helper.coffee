@@ -27,7 +27,7 @@ exports.importHelper = importHelper = (prefix) ->
   if partial
     return new Handlebars.SafeString(partial(this))
   throw new Error("""Can't find any matching import for "#{prefix}".
-    Context: #{stringifyPairs(this.$axes_values)}.
+    Context: #{stringifyPairs(this.$variables)}.
     Partials search: #{this.$partials_search?.join(', ')}.
   """)
 

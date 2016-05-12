@@ -1,7 +1,8 @@
-swig = require('swig')
+path = require('path')
 _ = require('lodash')
-Dicts = require('./dictionaries')
+swig = require('swig')
 consolidate = require('consolidate')
+Dicts = require('./dictionaries')
 
 { replacePlaceholders } = require('./util')
 
@@ -12,8 +13,8 @@ isCurrentPage = (navNode, selfLink, navPath) ->
     return navPath[navNode.$id]
   return selfLink is navNode.link
 
-populateDynamic = (template, axesValues, defaults) ->
-  context = _.assign({}, defaults, axesValues)
+populateDynamic = (template, variablesContext, defaults) ->
+  context = _.assign({}, defaults, variablesContext)
   return replacePlaceholders(template, context)
 
 exports.register = (consolidate, config) ->
@@ -42,4 +43,4 @@ exports.configureExpress = (app, config) ->
   exports.register(consolidate, config)
   app.engine('html', consolidate.swig)
   app.set('view engine', 'html')
-  app.set('views', config.templatesDir)
+  app.set('views', path.resolve(config.rootDir, config.templatesDir))

@@ -1,4 +1,5 @@
 _ = require('lodash')
+Combinatorics = require('js-combinatorics')
 
 exports.getValue = (value, restArgs...) ->
   if typeof value is 'function'
@@ -45,7 +46,7 @@ exports.replacePlaceholders = (arg, context) ->
 exports.refToFilename = (ref, ext) ->
   if ref is ''
     ref = 'index'
-  "#{ref}.#{ext}"
+  return "#{ref}.#{ext}"
 
 exports.filenameToRef = (filename, ext) ->
   extRe = new RegExp("\\.#{ext}$")
@@ -53,3 +54,23 @@ exports.filenameToRef = (filename, ext) ->
   if ref is 'index'
     ref = ''
   return ref
+
+compareCombinations = (a, b) ->
+  la = a.length
+  lb = b.length
+  # longer has higher specificity
+  if la != lb
+    return lb - la
+  # later items have lower specificity
+  # so the combination that skips higher index items has higher specificity
+  for i in [0...la]
+    if a[i] != b[i]
+      return a[i] - b[i]
+  return 0
+
+exports.searchOrder = (variables) ->
+  return Combinatorics.power(variables).toArray()
+    .filter (a) -> !!a.length
+    .sort(compareCombinations)
+    .map (a) -> a.join('+')
+    .concat('_default')
