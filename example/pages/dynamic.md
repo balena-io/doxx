@@ -1,7 +1,7 @@
 ---
 dynamic_page:
   variables: [ $os, $language ]
-  url: $os/$language/$baseUrl
+  ref: $os/$language/$originalRef
   switch_text: Getting Started with $os and $language
 ---
 
