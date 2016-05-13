@@ -1,5 +1,6 @@
 _ = require('lodash')
 Combinatorics = require('js-combinatorics')
+dynamic = require('metalsmith-dynamic')
 
 exports.getValue = (value, restArgs...) ->
   if typeof value is 'function'
@@ -37,20 +38,15 @@ exports.stringifyPairs = (obj) ->
     s.push("#{key}: #{value}")
   return s.join(', ')
 
-exports.replacePlaceholders = (arg, context) ->
-  for key, value of context
-    re = new RegExp(_.escapeRegExp(key), 'g')
-    arg = arg.replace(re, value)
-  return arg
+exports.replacePlaceholders = dynamic.util.replacePlaceholders
 
 exports.refToFilename = (ref, ext) ->
   if ref is ''
     ref = 'index'
-  return "#{ref}.#{ext}"
+  return dynamic.util.refToFilename(ref, ext)
 
 exports.filenameToRef = (filename, ext) ->
-  extRe = new RegExp("\\.#{ext}$")
-  ref = filename.replace(extRe, '')
+  ref = dynamic.util.filenameToRef(filename, ext)
   if ref is 'index'
     ref = ''
   return ref

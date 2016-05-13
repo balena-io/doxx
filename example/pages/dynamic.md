@@ -1,8 +1,8 @@
 ---
-dynamic_page:
+dynamic:
   variables: [ $os, $language ]
-  ref: $os/$language/$originalRef
-  switch_text: Getting Started with $os and $language
+  ref: $os/$language/$original_ref
+  $switch_text: Getting Started with $os and $language
 ---
 
 # Dynamic page about {{ $os.name }} & {{ $language.name }}

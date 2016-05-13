@@ -21,7 +21,7 @@ exports.getBestPartial = getBestPartial = (prefix, options, sep = '/') ->
     return partial if partial
 
 exports.importHelper = importHelper = (prefix) ->
-  if not this.dynamic_page
+  if not this.dynamic
     throw new Error("Using import in non-dynamic page #{this.ref}.")
   partial = getBestPartial(prefix, this.$partials_search)
   if partial

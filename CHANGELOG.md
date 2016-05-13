@@ -1,3 +1,8 @@
+**Breaking**:
+* `dynamic_page` is now `dynamic`
+* `dynamic_page.partials_search` is now `dynamic.$partials_search`
+* `dynamic_page.switch_text` is now `dynamic.$switch_text`
+
 ## 0.3.1
 
 **Improvements**:
