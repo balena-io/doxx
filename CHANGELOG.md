@@ -1,3 +1,5 @@
+## 0.4.0
+
 **Breaking**:
 * `dynamic_page` is now `dynamic`
 * `dynamic_page.partials_search` is now `dynamic.$partials_search`
