@@ -1,3 +1,5 @@
+## 0.3.0
+
 **Breaking**:
 * `dynamic_page.url` is now `dynamic_page.ref`
 * `$baseUrl` variable is now `$originalRef` (used in `ref` prop)
