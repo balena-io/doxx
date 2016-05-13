@@ -4,6 +4,7 @@ _ = require('lodash')
 consolidate = require('consolidate')
 
 Metalsmith = require('metalsmith')
+dynamic = require('metalsmith-dynamic')
 markdown = require('metalsmith-markdown')
 permalinks = require('metalsmith-permalinks')
 layouts = require('metalsmith-layouts')
@@ -12,8 +13,10 @@ headings = require('metalsmith-headings')
 Plugins = require('./metalsmith-plugins')
 
 Nav = require('./nav')
+Dicts = require('./dictionaries')
 SwigHelper = require('./swig-helper')
 HbHelper = require('./hb-helper')
+{ refToFilename, filenameToRef } = require('./util')
 
 module.exports = (cb) ->
   config = this.config
@@ -37,9 +40,18 @@ module.exports = (cb) ->
       metalsmith = metalsmith.use(plugin(pluginArgs...))
 
   use(true, plugins.skipPrivate)
-  use(true, plugins.inferFileTitles)
-  use(true, plugins.expandDynamicPages)
+
+  use(true, plugins.dynamicDefaults)
+  use(true, dynamic, {
+    dictionaries: Dicts(config)
+    populateFields: [ '$partials_search' ]
+    tokenizeFields: [ '$switch_text' ]
+    docsExt: config.docsExt
+    refToFilename, filenameToRef
+  })
+
   use(true, plugins.populateFileMeta)
+
   use(config.parseNav, plugins.parseNav)
   use(config.parseNav, plugins.populateFileNavMeta)
   use(config.serializeNav, plugins.serializeNav)

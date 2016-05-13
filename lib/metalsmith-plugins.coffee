@@ -1,14 +1,15 @@
 path = require('path')
 fs = require('fs')
-
 _ = require('lodash')
+
 LunrIndex = require('./lunr-index')
-DynamicPages = require('./dynamic-pages')
+HbHelper = require('./hb-helper')
 Dicts = require('./dictionaries')
 HbHelper = require('./hb-helper')
 
 { extractTitleFromText, walkTree, slugify, replacePlaceholders,
-  filenameToRef, refToFilename, getValue } = require('./util')
+  filenameToRef, refToFilename, getValue,
+  searchOrder } = require('./util')
 
 walkFiles = (fn) ->
   return (options) ->
@@ -25,12 +26,15 @@ module.exports = (config, navTree) ->
     if path.parse(file).name.match(/^_/)
       delete files[file]
 
-  exports.inferFileTitles = walkFiles (file, files) ->
+  exports.dynamicDefaults = walkFiles (file, files) ->
     obj = files[file]
-    obj.title or= extractTitleFromText(obj.contents.toString())
+    return if not obj.dynamic
+    obj.dynamic.$partials_search ?= searchOrder(obj.dynamic.variables)
 
   exports.populateFileMeta = walkFiles (file, files) ->
     obj = files[file]
+    title = obj.title or extractTitleFromText(obj.contents.toString())
+    obj.title = HbHelper.render(title, obj)
     obj.ref = filenameToRef(file, config.docsExt)
     obj.selfLink = '/' + obj.ref
     _.assign(obj, getValue(config.metaExtra, file, obj))
@@ -145,11 +149,6 @@ module.exports = (config, navTree) ->
         obj = files[file]
         setPathForFile(file, obj)
         setBreadcrumbsForFile(file, obj)
-      done()
-
-  exports.expandDynamicPages = ->
-    return (files, metalsmith, done) ->
-      DynamicPages.expand(files, config)
       done()
 
 
