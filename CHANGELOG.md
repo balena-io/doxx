@@ -1,3 +1,8 @@
+## 0.3.1
+
+**Improvements**:
+* improved default search order generation
+
 ## 0.3.0
 
 **Breaking**:
