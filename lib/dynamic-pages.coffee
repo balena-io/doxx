@@ -8,6 +8,7 @@ HbHelper = require('./hb-helper')
 
 exports.expand = (files, config) ->
   dicts = Dicts(config)
+
   tokenizeSwitchText = (text) ->
     return if not text
     result = []
@@ -17,22 +18,26 @@ exports.expand = (files, config) ->
       result.push(text.substring(start, match.index).trim())
       result.push(match[0])
       start = match.index + match[0].length
-    result.push(text.substring(start).trim())
+    remainingText = text.substring(start).trim()
+    result.push(remainingText) if remainingText
     return result
 
   buildSinglePage = (templateObj, dynamicMeta, variablesContext) ->
     {
-      url,
+      ref: refFormat,
       partials_search: partialsSearchOrder,
       switch_text: switchText
     } = dynamicMeta
 
-    baseUrl = filenameToRef(templateObj.originalRef, config.docsExt)
-    context = _.assign({}, variablesContext, {
-      $baseUrl: baseUrl
+    originalRef = filenameToRef(templateObj.originalRef, config.docsExt)
+
+    extendedVariablesContext = _.assign({}, variablesContext, {
+      $originalRef: originalRef
     })
 
-    urlTemplate = '/' + url.replace('$baseUrl', baseUrl)
+    refTemplate = replacePlaceholders(refFormat, {
+      $originalRef: originalRef
+    })
 
     populate = (arg) ->
       return arg if not arg
@@ -42,18 +47,18 @@ exports.expand = (files, config) ->
       else if _.isObject(arg)
         return _.mapValues(arg, populate)
       else if _.isString(arg)
-        return replacePlaceholders(arg, context)
+        return replacePlaceholders(arg, extendedVariablesContext)
 
     obj = _.assign({}, templateObj, {
       title: HbHelper.render(templateObj.title, templateObj)
       $partials_search: populate(partialsSearchOrder)
       $dictionaries: dicts
       $variables: variablesContext
-      $url_template: urlTemplate
+      $ref_template: refTemplate
       $switch_text: tokenizeSwitchText(switchText)
     })
 
-    key = refToFilename(populate(url), config.docsExt)
+    key = refToFilename(populate(refTemplate), config.docsExt)
     return { "#{key}": obj }
 
   buildPagesRec = (templateObj, dynamicMeta, variablesContext, remainingVariables) ->
@@ -77,22 +82,25 @@ exports.expand = (files, config) ->
         "#{nextVariable}": details
       })
       nextContext = _.extend({}, variablesContext, { "#{nextVariable}": nextVariableId })
+
       _.assign(result, buildPagesRec(
         nextTemplateObj,
         dynamicMeta,
         nextContext,
         remainingVariables
       ))
+
     return result
 
-  buildDynamicPages = (originalRef, templateObj) ->
-    console.log("Expanding dynamic page #{originalRef}")
+  buildDynamicPages = (file, templateObj) ->
+    console.log("Expanding dynamic page #{file}")
+    originalRef = filenameToRef(file, config.docsExt)
     templateObj = _.assign({ originalRef }, templateObj)
     dynamicMeta = _.assign({}, templateObj.dynamic_page)
 
     { variables: variablesNames } = dynamicMeta
     if not variablesNames
-      throw new Error("No variables defined for the dynamic page #{originalRef}.")
+      throw new Error("No variables defined for the dynamic page #{file}.")
 
     dynamicMeta.partials_search ?= searchOrder(variablesNames)
 

@@ -1,3 +1,8 @@
+**Breaking**:
+* `dynamic_page.url` is now `dynamic_page.ref`
+* `$baseUrl` variable is now `$originalRef` (used in `ref` prop)
+* `$url_template` is now `$ref_template` and doesn't have the leading slash
+
 ## 0.2.0
 
 **Breaking**:

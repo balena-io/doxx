@@ -15,7 +15,7 @@
 {% endmacro %}
 
 <div class="form-inline js-dynamic-switch"
-  data-url-template="{{ $url_template }}">
+  data-url-template="/{{ $ref_template }}">
   <div class="form-group">
     {% for part in $switch_text %}
       {% if loop.index % 2 %}
