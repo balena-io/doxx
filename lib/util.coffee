@@ -61,7 +61,7 @@ compareCombinations = (a, b) ->
   # longer has higher specificity
   if la != lb
     return lb - la
-  # later items have lower specificity
+  # later items have lower priority
   # so the combination that skips higher index items has higher specificity
   for i in [0...la]
     if a[i] != b[i]
@@ -69,8 +69,18 @@ compareCombinations = (a, b) ->
   return 0
 
 exports.searchOrder = (variables) ->
-  return Combinatorics.power(variables).toArray()
+  count = variables?.length
+  if not count
+    result = []
+  else
+    idx = [0...count]
+    combinations = Combinatorics.power(idx)
+    .toArray()
     .filter (a) -> !!a.length
     .sort(compareCombinations)
-    .map (a) -> a.join('+')
-    .concat('_default')
+
+    result = combinations.map (c) ->
+      c.map (i) -> variables[i]
+      .join('+')
+
+  return result.concat('_default')
