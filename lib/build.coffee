@@ -12,10 +12,11 @@ inplace = require('metalsmith-in-place')
 headings = require('metalsmith-headings')
 Plugins = require('./metalsmith-plugins')
 
+HbHelper = require('@resin.io/doxx-handlebars-helper')
+
 Nav = require('./nav')
 Dicts = require('./dictionaries')
 SwigHelper = require('./swig-helper')
-HbHelper = require('./hb-helper')
 { refToFilename, filenameToRef } = require('./util')
 
 module.exports = (cb) ->
@@ -28,7 +29,11 @@ module.exports = (cb) ->
   plugins = Plugins(config, navTree)
 
   SwigHelper.register(consolidate, config)
-  HbHelper.register(consolidate, config)
+  HbHelper.registerConsolidate(consolidate, {
+    beforeRun: ->
+      if not this.dynamic
+        console.warn("Warning! Using import in non-dynamic page #{this.ref}.")
+  })
 
   console.log('Building HTML...')
   metalsmith = Metalsmith(config.rootDir)
