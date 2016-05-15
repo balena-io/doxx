@@ -1,6 +1,7 @@
 _ = require('lodash')
 getConfig = require('./config')
 SwigHelper = require('./swig-helper')
+HbHelper = require('@resin.io/doxx-handlebars-helper')
 LunrSearch = require('./lunr-search')
 Nav = require('./nav')
 
@@ -28,5 +29,9 @@ Doxx::loadLunrIndex = ->
   LunrSearch.loadIndex(this.config)
 
 Doxx::lunrSearch = LunrSearch.search
+
+Doxx.Handlebars = HbHelper.Handlebars
+console.log Doxx.Handlebars
+Doxx.swig = SwigHelper.swig
 
 module.exports = Doxx
