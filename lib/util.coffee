@@ -32,12 +32,6 @@ exports.slugify = (s) ->
     .replace(/^-/, '')
     .replace(/-$/, '')
 
-exports.stringifyPairs = (obj) ->
-  s = []
-  for key, value of obj
-    s.push("#{key}: #{value}")
-  return s.join(', ')
-
 exports.replacePlaceholders = dynamic.util.replacePlaceholders
 
 exports.refToFilename = (ref, ext) ->
@@ -66,17 +60,14 @@ compareCombinations = (a, b) ->
 
 exports.searchOrder = (variables) ->
   count = variables?.length
-  if not count
-    result = []
-  else
-    idx = [0...count]
-    combinations = Combinatorics.power(idx)
-    .toArray()
-    .filter (a) -> !!a.length
-    .sort(compareCombinations)
+  return [] if not count
 
-    result = combinations.map (c) ->
-      c.map (i) -> variables[i]
-      .join('+')
+  idx = [0...count]
+  combinations = Combinatorics.power(idx)
+  .toArray()
+  .filter (a) -> !!a.length
+  .sort(compareCombinations)
 
-  return result.concat('_default')
+  return combinations.map (c) ->
+    c.map (i) -> variables[i]
+    .join('+')

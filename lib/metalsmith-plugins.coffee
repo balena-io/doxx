@@ -2,10 +2,10 @@ path = require('path')
 fs = require('fs')
 _ = require('lodash')
 
+HbHelper = require('@resin.io/doxx-handlebars-helper')
+
 LunrIndex = require('./lunr-index')
-HbHelper = require('./hb-helper')
 Dicts = require('./dictionaries')
-HbHelper = require('./hb-helper')
 
 { extractTitleFromText, walkTree, slugify, replacePlaceholders,
   filenameToRef, refToFilename, getValue,

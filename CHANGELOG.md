@@ -1,3 +1,10 @@
+**Improvements**:
+* $partials_search (if specified) now does not have to specify `_default` in the end — it's always assumed automatically.
+
+**Breaking**:
+
+* using partials in non-dynamic pages will now print warnings (and import `prefix/_default`). It used to thrown an error before.
+
 ## 0.4.1
 
 Updated GitHub repository
