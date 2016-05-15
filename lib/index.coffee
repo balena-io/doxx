@@ -31,7 +31,6 @@ Doxx::loadLunrIndex = ->
 Doxx::lunrSearch = LunrSearch.search
 
 Doxx.Handlebars = HbHelper.Handlebars
-console.log Doxx.Handlebars
 Doxx.swig = SwigHelper.swig
 
 module.exports = Doxx

@@ -1,6 +1,7 @@
 **Improvements**:
 * `$partials_search` (if specified) now does not have to specify `_default` in the end — it's always assumed automatically.
 * `Handlebars` and `swig` engines are now exposed as static properties of `Doxx`. Can be used to register additional helpers and filters.
+* update dependencies
 
 **Breaking**:
 
