@@ -1,3 +1,7 @@
+## 0.6.1
+
+Fix wrong minimal metalsmith-dynamic version
+
 ## 0.6.0
 
 **Breaking**:
