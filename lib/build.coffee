@@ -51,7 +51,6 @@ module.exports = (cb) ->
     dictionaries: Dicts(config)
     populateFields: [ '$partials_search' ]
     tokenizeFields: [ '$switch_text' ]
-    docsExt: config.docsExt
     refToFilename, filenameToRef
   })
 
