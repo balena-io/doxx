@@ -31,11 +31,14 @@ module.exports = (config, navTree) ->
     return if not obj.dynamic
     obj.dynamic.$partials_search ?= searchOrder(obj.dynamic.variables)
 
+  fileByRef = {}
+
   exports.populateFileMeta = walkFiles (file, files) ->
     obj = files[file]
     title = obj.title or extractTitleFromText(obj.contents.toString())
     obj.title = HbHelper.render(title, obj)
-    obj.ref = filenameToRef(file, config.docsExt)
+    [ obj.ref, obj.ext ] = filenameToRef(file)
+    fileByRef[obj.ref] = obj
     obj.selfLink = '/' + obj.ref
     _.assign(obj, getValue(config.metaExtra, file, obj))
 
@@ -56,7 +59,7 @@ module.exports = (config, navTree) ->
         console.log('Successfully finished indexing.')
         done()
 
-  navByFile = null
+  navByRef = null
 
   exports.parseNav = ->
     setRefRec = (ref, node, remainingVariables) ->
@@ -75,7 +78,7 @@ module.exports = (config, navTree) ->
       if ref.indexOf('$') >= 0
         setRefRec(ref, node, dicts.dictNames)
       else
-        navByFile[refToFilename(ref, config.docsExt)] = node
+        navByRef[ref] = node
 
     setRefs = walkTree
       visitNode: (node) ->
@@ -83,9 +86,9 @@ module.exports = (config, navTree) ->
           setRef(node.ref, node)
 
     fixNavNodeTitleAndSetSlug = walkTree
-      visitNode: (node, files) ->
+      visitNode: (node) ->
         if node.level?
-          node.title or= files[refToFilename(node.ref, config.docsExt)]?.title
+          node.title or= fileByRef[node.ref]?.title
           node.slug = slugify(node.title)
 
     addNavParents = walkTree
@@ -101,10 +104,10 @@ module.exports = (config, navTree) ->
     return (files, metalsmith, done) ->
       console.log('Parsing navigation...')
 
-      fixNavNodeTitleAndSetSlug(navTree, files)
+      fixNavNodeTitleAndSetSlug(navTree)
       addNavParents(navTree, [])
 
-      navByFile = {}
+      navByRef = {}
       setRefs(navTree)
 
       console.log('Navigation parsed and indexed.')
@@ -130,7 +133,8 @@ module.exports = (config, navTree) ->
   exports.populateFileNavMeta = ->
 
     setBreadcrumbsForFile = (file, obj) ->
-      navNode = navByFile[file]
+      [ ref ] = filenameToRef(file)
+      navNode = navByRef[ref]
       obj.breadcrumbs = bc = navNode?.parents
         .map (node) -> node.title
       # TODO: this logic is twisted and should be improved
@@ -139,7 +143,9 @@ module.exports = (config, navTree) ->
           HbHelper.render(navNode.titleTemplate, obj)
 
     setPathForFile = (file, obj) ->
-      if navPath = navByFile[file]?.parents
+      [ ref ] = filenameToRef(file)
+      navNode = navByRef[ref]
+      if navPath = navNode?.parents
         obj.navPath = {}
         for node in navPath
           obj.navPath[node.$id] = true

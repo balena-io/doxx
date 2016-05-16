@@ -15,9 +15,6 @@ calcRefs = walkTree
     { link } = node
     if link and link[0] is '/'
       node.ref = link[1..]
-      # TODO: this should not be needed
-      if not node.ref
-        node.ref = 'index'
 
     if node.level? and not node.ref? and not node.title
       throw new Error("No title for external link node. #{node.raw}")

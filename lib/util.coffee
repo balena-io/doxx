@@ -34,16 +34,16 @@ exports.slugify = (s) ->
 
 exports.replacePlaceholders = dynamic.util.replacePlaceholders
 
-exports.refToFilename = (ref, ext) ->
+exports.refToFilename = (ref, ext, addExt) ->
   if ref is ''
     ref = 'index'
-  return dynamic.util.refToFilename(ref, ext)
+  return dynamic.util.refToFilename(ref, ext, addExt)
 
-exports.filenameToRef = (filename, ext) ->
-  ref = dynamic.util.filenameToRef(filename, ext)
+exports.filenameToRef = (filename) ->
+  [ ref, ext ] = dynamic.util.filenameToRef(filename)
   if ref is 'index'
     ref = ''
-  return ref
+  return [ ref, ext ]
 
 compareCombinations = (a, b) ->
   la = a.length
