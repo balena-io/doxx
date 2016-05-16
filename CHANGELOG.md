@@ -1,3 +1,5 @@
+## 0.7.0
+
 Move some utility functions to doxx-utils
 
 ## 0.6.1
