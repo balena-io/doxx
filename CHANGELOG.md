@@ -1,3 +1,5 @@
+## 0.6.0
+
 **Breaking**:
 * files with duplicate refs (basically name without extension) can cause navigation glitches. This is a bit of edge case, because normally all files should use the same extension like `.md`
 
