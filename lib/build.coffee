@@ -12,6 +12,7 @@ inplace = require('metalsmith-in-place')
 headings = require('metalsmith-headings')
 Plugins = require('./metalsmith-plugins')
 
+{ defaultPartialsSearch } = require('@resin.io/doxx-utils')
 HbHelper = require('@resin.io/doxx-handlebars-helper')
 
 Nav = require('./nav')
@@ -46,7 +47,7 @@ module.exports = (cb) ->
 
   use(true, plugins.skipPrivate)
 
-  use(true, plugins.dynamicDefaults)
+  use(true, defaultPartialsSearch)
   use(true, dynamic, {
     dictionaries: Dicts(config)
     populateFields: [ '$partials_search' ]

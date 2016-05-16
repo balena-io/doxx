@@ -3,20 +3,14 @@ fs = require('fs')
 _ = require('lodash')
 
 HbHelper = require('@resin.io/doxx-handlebars-helper')
+{ walkFiles, walkTree } = require('@resin.io/doxx-utils')
 
 LunrIndex = require('./lunr-index')
 Dicts = require('./dictionaries')
 
-{ extractTitleFromText, walkTree, slugify, replacePlaceholders,
-  filenameToRef, refToFilename, getValue,
-  searchOrder } = require('./util')
+{ extractTitleFromText, slugify, replacePlaceholders,
+  filenameToRef, refToFilename, getValue } = require('./util')
 
-walkFiles = (fn) ->
-  return (options) ->
-    return (files, metalsmith, done) ->
-      for file of files
-        fn(file, files, metalsmith, options)
-      done()
 
 module.exports = (config, navTree) ->
   dicts = Dicts(config)
@@ -25,11 +19,6 @@ module.exports = (config, navTree) ->
   exports.skipPrivate = walkFiles (file, files) ->
     if path.parse(file).name.match(/^_/)
       delete files[file]
-
-  exports.dynamicDefaults = walkFiles (file, files) ->
-    obj = files[file]
-    return if not obj.dynamic
-    obj.dynamic.$partials_search ?= searchOrder(obj.dynamic.variables)
 
   fileByRef = {}
 
