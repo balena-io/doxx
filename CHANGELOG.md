@@ -1,3 +1,5 @@
+## 0.9.0
+
 **Breaking**:
 * navigation `swig` helpers unified and simplified a lot:
   * `isCurrentPage` -> `navIsCurrentPage(navNode, $nav)`
