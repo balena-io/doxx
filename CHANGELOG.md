@@ -1,3 +1,7 @@
+## 0.9.1
+
+Bugfixes: safe handling of edge cases and orphan pages
+
 ## 0.9.0
 
 **Breaking**:

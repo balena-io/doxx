@@ -123,23 +123,26 @@ module.exports = (config, navTree) ->
     { ref } = obj
     navNode = navByRef[ref]
 
-    obj.$nav = $nav =
+    obj.$nav = nav =
       url: "/#{obj.ref}"
 
+    parents = navNode?.parents
+
     # set nav path
-    if parents = navNode?.parents
-      $nav.path = {}
+    if parents?
+      nav.path = {}
       for node in parents
-        $nav.path[node.$id] = true
+        nav.path[node.$id] = true
 
     # set breadcrumbs
-    obj.breadcrumbs = bc = navNode?.parents?.map (node) -> node.title
+    obj.breadcrumbs = bc = parents?.map (node) ->
+      node.title
     # TODO: this logic is twisted and should be improved
     if navNode?.isDynamic
-      $nav.title = HbHelper.render(navNode.titleTemplate, obj)
+      nav.title = HbHelper.render(navNode.titleTemplate, obj)
       if bc?.length
-        bc[bc.length - 1] = $nav.title
+        bc[bc.length - 1] = nav.title
     else
-      $nav.title = navNode.title
+      nav.title = navNode?.title
 
   return exports

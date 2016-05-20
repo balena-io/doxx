@@ -8,7 +8,7 @@ Dicts = require('./dictionaries')
 
 isCurrentPage = (navNode, $nav) ->
   if navNode.isDynamic
-    return $nav.url.match(navNode.linkRe)
+    return $nav.url?.match(navNode.linkRe)
   return $nav.url is navNode.link
 
 populateDynamic = (template, variablesContext, defaults) ->
@@ -33,7 +33,7 @@ exports.register = (consolidate, config) ->
       return navNode.title
 
   swig.setFilter 'navIsCurrentTree', (navNode, $nav) ->
-    return $nav.path[navNode.$id]
+    return !!$nav.path?[navNode.$id]
 
   consolidate.requires.swig = swig
 
