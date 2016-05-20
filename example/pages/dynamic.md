@@ -12,3 +12,13 @@ Hey, this is the page about **{{ $os.name }}** and **{{ $language.name }}**.
 ## Smart import
 
 {{ import "imported" }}
+
+# Helpers Example
+
+{{#eq $os.id "osx"}}
+  **This page _is about_ OSX**.
+  This paragraph is rendered using the Handlebars helper.
+{{else}}
+  **This page _is NOT about_ OSX**.
+  This paragraph is rendered using the Handlebars helper.
+{{/eq}}
