@@ -1,3 +1,22 @@
+**Breaking**:
+* navigation `swig` helpers unified and simplified a lot:
+  * `isCurrentPage` -> `navIsCurrentPage(navNode, $nav)`
+  * `isCurrentTree` -> `navIsCurrentTree(navNode, $nav)`
+  * `getLink` -> `navGetLink(navNode, $nav)`
+  * `getTitle` -> `navGetTitle(navNode, $nav)`
+
+  (`$nav` is a new context variable described below)
+
+* context variables renamed:
+  * `selfLink` -> `$nav.url`
+  * `navPath` -> `$nav.path`
+
+**Improvements**:
+A new `$nav` variable is defined with the following properties:
+* `url` — the link to this page (in form of `/ref`)
+* `path` — the navigation path (an object where keys are page IDs and values are `true`)
+* `title` — the "navigation" title for this page, either a populated dynamic title, or the regular title as defined in navigation
+
 ## 0.8.0
 
 Added support for [rich collection of helpers](https://github.com/assemble/handlebars-helpers)

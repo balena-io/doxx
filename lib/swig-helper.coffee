@@ -6,12 +6,10 @@ Dicts = require('./dictionaries')
 
 { replacePlaceholders } = require('./util')
 
-isCurrentPage = (navNode, selfLink, navPath) ->
+isCurrentPage = (navNode, $nav) ->
   if navNode.isDynamic
-    return selfLink.match(navNode.linkRe)
-  if navPath
-    return navPath[navNode.$id]
-  return selfLink is navNode.link
+    return $nav.url.match(navNode.linkRe)
+  return $nav.url is navNode.link
 
 populateDynamic = (template, variablesContext, defaults) ->
   context = _.assign({}, defaults, variablesContext)
@@ -20,22 +18,22 @@ populateDynamic = (template, variablesContext, defaults) ->
 exports.register = (consolidate, config) ->
   dicts = Dicts(config)
 
-  swig.setFilter 'isCurrentPage', isCurrentPage
+  swig.setFilter 'navIsCurrentPage', isCurrentPage
 
-  swig.setFilter 'getLink', (navNode, selfLink, navPath) ->
-    if isCurrentPage(navNode, selfLink, navPath)
-      return selfLink
+  swig.setFilter 'navGetLink', (navNode, $nav) ->
+    if isCurrentPage(navNode, $nav)
+      return $nav.url
     else
       return populateDynamic(navNode.link, null, dicts.getDefaults())
 
-  swig.setFilter 'getTitle', (navNode, selfLink, navPath, title) ->
-    if isCurrentPage(navNode, selfLink, navPath) and navNode.isDynamic
-      return title
+  swig.setFilter 'navGetTitle', (navNode, $nav) ->
+    if isCurrentPage(navNode, $nav) and navNode.isDynamic
+      return $nav.title
     else
       return navNode.title
 
-  swig.setFilter 'isCurrentTree', (navNode, navPath) ->
-    return navPath[navNode.$id]
+  swig.setFilter 'navIsCurrentTree', (navNode, $nav) ->
+    return $nav.path[navNode.$id]
 
   consolidate.requires.swig = swig
 

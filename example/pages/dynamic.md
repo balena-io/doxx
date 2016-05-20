@@ -13,7 +13,7 @@ Hey, this is the page about **{{ $os.name }}** and **{{ $language.name }}**.
 
 {{ import "imported" }}
 
-# Helpers Example
+## Helpers Example
 
 {{#eq $os.id "osx"}}
   **This page _is about_ OSX**.
