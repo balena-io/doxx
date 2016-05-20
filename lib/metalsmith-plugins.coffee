@@ -28,7 +28,6 @@ module.exports = (config, navTree) ->
     obj.title = HbHelper.render(title, obj)
     [ obj.ref, obj.ext ] = filenameToRef(file)
     fileByRef[obj.ref] = obj
-    obj.selfLink = '/' + obj.ref
     _.assign(obj, getValue(config.metaExtra, file, obj))
 
   exports.buildSearchIndex = ->
@@ -119,32 +118,28 @@ module.exports = (config, navTree) ->
         console.log('Successfully serialized navigation tree.')
       done()
 
-  exports.populateFileNavMeta = ->
+  exports.populateFileNavMeta = walkFiles (file, files) ->
+    obj = files[file]
+    { ref } = obj
+    navNode = navByRef[ref]
 
-    setBreadcrumbsForFile = (file, obj) ->
-      [ ref ] = filenameToRef(file)
-      navNode = navByRef[ref]
-      obj.breadcrumbs = bc = navNode?.parents
-        .map (node) -> node.title
-      # TODO: this logic is twisted and should be improved
-      if navNode?.isDynamic and bc?.length
-        bc[bc.length - 1] =
-          HbHelper.render(navNode.titleTemplate, obj)
+    obj.$nav = $nav =
+      url: "/#{obj.ref}"
 
-    setPathForFile = (file, obj) ->
-      [ ref ] = filenameToRef(file)
-      navNode = navByRef[ref]
-      if navPath = navNode?.parents
-        obj.navPath = {}
-        for node in navPath
-          obj.navPath[node.$id] = true
+    # set nav path
+    if parents = navNode?.parents
+      $nav.path = {}
+      for node in parents
+        $nav.path[node.$id] = true
 
-    return (files, metalsmith, done) ->
-      for file of files
-        obj = files[file]
-        setPathForFile(file, obj)
-        setBreadcrumbsForFile(file, obj)
-      done()
-
+    # set breadcrumbs
+    obj.breadcrumbs = bc = navNode?.parents?.map (node) -> node.title
+    # TODO: this logic is twisted and should be improved
+    if navNode?.isDynamic
+      $nav.title = HbHelper.render(navNode.titleTemplate, obj)
+      if bc?.length
+        bc[bc.length - 1] = $nav.title
+    else
+      $nav.title = navNode.title
 
   return exports
