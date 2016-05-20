@@ -15,6 +15,10 @@ Plugins = require('./metalsmith-plugins')
 { defaultPartialsSearch } = require('@resin.io/doxx-utils')
 HbHelper = require('@resin.io/doxx-handlebars-helper')
 
+require('handlebars-helpers')({
+  handlebars: HbHelper.Handlebars
+})
+
 Nav = require('./nav')
 Dicts = require('./dictionaries')
 SwigHelper = require('./swig-helper')
