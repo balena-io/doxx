@@ -1,3 +1,5 @@
+## 0.8.0
+
 Added support for [rich collection of helpers](https://github.com/assemble/handlebars-helpers)
 
 ## 0.7.0

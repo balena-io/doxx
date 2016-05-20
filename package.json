@@ -1,6 +1,6 @@
 {
   "name": "@resin.io/doxx",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Doxx — a static docs generator with dynamic pages support.",
   "main": "index.js",
   "scripts": {
