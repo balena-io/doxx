@@ -1,3 +1,5 @@
+Examples converted from CoffeeScript to plain JS
+
 ## 0.9.1
 
 Bugfixes: safe handling of edge cases and orphan pages
