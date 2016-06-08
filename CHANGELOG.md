@@ -1,3 +1,5 @@
+## 0.9.2
+
 Examples converted from CoffeeScript to plain JS
 
 ## 0.9.1
