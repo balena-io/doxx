@@ -1,0 +1,7 @@
+Home[/]
+  [/page1]
+    [/page1.1]
+  [/page2]
+    [/page2.1]
+Dynamic page
+  Dynamic page ~ Dynamic page for {{ $os.name }} & {{ $language.name }}[/$os/$language/dynamic]
