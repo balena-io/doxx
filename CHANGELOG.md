@@ -1,3 +1,5 @@
+Bugfix: fail loud on unknown variables in navigation URLs, instead of going into infinite recursion.
+
 ## 0.9.2
 
 Examples converted from CoffeeScript to plain JS

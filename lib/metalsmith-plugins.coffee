@@ -7,6 +7,7 @@ HbHelper = require('@resin.io/doxx-handlebars-helper')
 
 LunrIndex = require('./lunr-index')
 Dicts = require('./dictionaries')
+{ tokenize } = require('metalsmith-dynamic').util
 
 { extractTitleFromText, slugify, replacePlaceholders,
   filenameToRef, refToFilename, getValue } = require('./util')
@@ -64,7 +65,8 @@ module.exports = (config, navTree) ->
     setRef = (ref, node) ->
       return if not ref?
       if ref.indexOf('$') >= 0
-        setRefRec(ref, node, dicts.dictNames)
+        tokens = (t for t, i in tokenize(ref) when i % 2)
+        setRefRec(ref, node, tokens)
       else
         navByRef[ref] = node
 
