@@ -18,6 +18,9 @@ HbHelper = require('@resin.io/doxx-handlebars-helper')
 require('handlebars-helpers')({
   handlebars: HbHelper.Handlebars
 })
+require('./extra-handlebars-helpers')({
+  handlebars: HbHelper.Handlebars
+})
 
 Nav = require('./nav')
 Dicts = require('./dictionaries')
