@@ -1,3 +1,5 @@
+## 0.10.0
+
 **Improvements**:
 * new custom Handlebars block helpers for working with semver:
   * `semverGt`, `semverGte`, `semverLt`, `semverLte`, `semverEq`, `semverNeq`, `semverSatisfies`, `semverCmp`. The arguments match those of the corresponding methods in [semver module](https://github.com/npm/node-semver#functions).
