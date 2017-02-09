@@ -9,7 +9,7 @@ if (!configPath) {
 
 var config = require(configPath)
 
-Doxx = require('./index')
+var Doxx = require('./index')
 
 Doxx(config).build(function(err) {
   if (err) {
