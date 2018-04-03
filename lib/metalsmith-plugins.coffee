@@ -25,11 +25,12 @@ module.exports = (config, navTree) ->
 
   exports.populateFileMeta = walkFiles (file, files) ->
     obj = files[file]
+    _.assign(obj, getValue(config.metaExtra, file, obj))
     title = obj.title or extractTitleFromText(obj.contents.toString())
     obj.title = HbHelper.render(title, obj)
     [ obj.ref, obj.ext ] = filenameToRef(file)
     fileByRef[obj.ref] = obj
-    _.assign(obj, getValue(config.metaExtra, file, obj))
+    
 
   exports.buildSearchIndex = ->
     console.log('Building search index...')
