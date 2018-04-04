@@ -1,3 +1,9 @@
+## 0.10.1
+
+**Improvements**:
+* Page titles can now use metaExtra information, which was only available to the page body previously.
+* README updated with more information.
+
 ## 0.10.0
 
 **Improvements**:
