@@ -12,7 +12,6 @@ Dicts = require('./dictionaries')
 { extractTitleFromText, slugify, replacePlaceholders,
   filenameToRef, refToFilename, getValue } = require('./util')
 
-
 module.exports = (config, navTree) ->
   dicts = Dicts(config)
   exports = {}
@@ -30,7 +29,6 @@ module.exports = (config, navTree) ->
     obj.title = HbHelper.render(title, obj)
     [ obj.ref, obj.ext ] = filenameToRef(file)
     fileByRef[obj.ref] = obj
-    
 
   exports.buildSearchIndex = ->
     console.log('Building search index...')
