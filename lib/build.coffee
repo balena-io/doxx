@@ -10,6 +10,7 @@ permalinks = require('metalsmith-permalinks')
 layouts = require('metalsmith-layouts')
 inplace = require('metalsmith-in-place')
 headings = require('metalsmith-headings')
+prefixoid = require('metalsmith-prefixoid')
 Plugins = require('./metalsmith-plugins')
 
 { defaultPartialsSearch } = require('@resin.io/doxx-utils')
@@ -18,6 +19,7 @@ HbHelper = require('@resin.io/doxx-handlebars-helper')
 require('handlebars-helpers')({
   handlebars: HbHelper.Handlebars
 })
+
 require('./extra-handlebars-helpers')({
   handlebars: HbHelper.Handlebars
 })
@@ -86,6 +88,28 @@ module.exports = (cb) ->
     default: config.defaultTemplate
     locals: this.getLocals({ nav: navTree })
   })
+
+  if config.pathPrefix
+    use(true, prefixoid, {
+      prefix: config.pathPrefix
+    })
+
+    use(true, prefixoid, {
+      prefix: config.pathPrefix
+      tag: 'img'
+      attr: 'src'
+    })
+
+    use(true, prefixoid, {
+      prefix: config.pathPrefix
+      tag: 'script'
+      attr: 'src'
+    })
+
+    use(true, prefixoid, {
+      prefix: config.pathPrefix
+      tag: 'link'
+    })
 
   metalsmith.build (err) ->
     return cb(err) if err
