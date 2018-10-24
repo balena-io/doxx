@@ -4,6 +4,10 @@
 * Page titles can now use metaExtra information, which was only available to the page body previously.
 * README updated with more information.
 
+## v0.11.0 - 2018-10-23
+
+* Add support for subpaths [John (Jack) Brown]
+
 ## 0.10.0
 
 **Improvements**:
