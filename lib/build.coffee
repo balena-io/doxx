@@ -108,6 +108,12 @@ module.exports = (cb) ->
 
     use(true, prefixoid, {
       prefix: config.pathPrefix
+      tag: 'div'
+      attr: 'data-url-template'
+    })
+
+    use(true, prefixoid, {
+      prefix: config.pathPrefix
       tag: 'link'
     })
 
