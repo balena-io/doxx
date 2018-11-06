@@ -4,6 +4,10 @@
 * Page titles can now use metaExtra information, which was only available to the page body previously.
 * README updated with more information.
 
+## 0.11.1 - 2018-11-06
+
+* Continue support for subpaths This is with reference to the dynamic pages dropdown switch generator using data-url-template attributes to pass URLs to client JS. [Chris Crocker-White]
+
 ## v0.11.0 - 2018-10-23
 
 * Add support for subpaths [John (Jack) Brown]
