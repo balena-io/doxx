@@ -1,18 +1,31 @@
 Doxx — static docs generator
 ======================
 
-> Originally created as part of the Resin.io documentation repository, the code is now extracted and generalized.
+> Originally created as part of the [Balena](https://www.balena.io/) [documentation repository](https://github.com/balena-io/docs), the code is now extracted and generalized.
 
 Doxx is an opinionated yet flexible static generator for technical documentation.
 
-Doxx was created at Resin.io to address the requirements (some of them unique) we have for our docs:
+Doxx was created at **balena** to address the requirements (some of them unique) we have for our docs:
 * author docs in Markdown,
-* use Handlebars templates inside of the docs files, with support for partials (DRY FTW). It also has a [rich collection of helpers](https://github.com/assemble/handlebars-helpers) preloaded,
+* use Handlebars templates inside of the docs files, with support for partials. It also has a [rich collection of helpers](https://github.com/assemble/handlebars-helpers) preloaded,
 * generate "dynamic" pages by expanding the skeleton page over a combination of parameters, and be able to override parts of such pages for specific params combinations,
 * use powerful templating language (Swig in our case) for pages layouts,
 * generate static docs, but also be able to reuse the same layouts for a couple of dynamic routes (like server-rendered search results),
 * easily define navigation tree using the simple plain-text format,
 * easily render breadcrumbs that reflect the page position in the navigation tree.
+
+## Installation
+
+```
+npm i @resin.io/doxx
+```
+
+or if you prefer `yarn`
+
+```
+yarn add @resin.io/doxx
+```
+
 
 ## Writing and editing documentation
 
@@ -22,7 +35,7 @@ To create reusable content which appears on multiple pages, create a file in the
 
 ### Dynamic pages
 
-Doxx allows the creation of dynamic documentation pages. These are pages which are generated based on options selected by the user. For example, you may wish to change the content of a 'Getting started' page for different language and OS combinations. Each dynamic page has one or more dropdowns at the top of the page which enumerate the various options.
+Doxx allows the creation of dynamic documentation pages. These are pages which are generated based on options selected by the user. For example, you may wish to change the content of a 'Getting started' page for different language and OS combinations. Each dynamic page has one or more dropdowns at the top of the page which enumerates the various options.
 
 A dynamic page looks very much like a normal page but with a special header and a larger-than-average amount of shared content.
 
@@ -49,7 +62,7 @@ This will look in the shared folder with the name of the snippet and import file
 
 1) **Exact matches**: Doxx will first look for a file of the form `variable1+variable2.md`. For example, in a page where the user can choose an OS and a language, if the user has chosen `osx` and `javascript` then Doxx will import the file `osx+javascript.md`. The order is important here: it is the order defined in the variables list in the header of the dynamic page.
 
-2) **Matches for a single variable**: if there is no file with that name, Doxx will then look for a file of the form `variable1.md` and then `variable2.md`. For the example above, if a file called `osx.md` exists then Doxx withj import that, and if not then it will look for and import a file called `javascript.md`. Again the order of precedence is determined by the order the variables are defined in the header.
+2) **Matches for a single variable**: if there is no file with that name, Doxx will then look for a file of the form `variable1.md` and then `variable2.md`. For the example above, if a file called `osx.md` exists then Doxx will import that, and if not then it will look for and import a file called `javascript.md`. Again the order of precedence is determined by the order the variables are defined in the header.
 
 3) **Default**: if no exact or partial match is found, Doxx imports `_default.md`.
 

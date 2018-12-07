@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/resin-io/doxx.git"
+    "url": "git://github.com/balena-io/doxx.git"
   },
   "author": "Eugene Mirotin <eugene@resin.io>",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/resin-io-playground/doxx/issues"
+    "url": "https://github.com/balena-io/doxx/issues"
   },
-  "homepage": "https://github.com/resin-io-playground/doxx",
+  "homepage": "https://github.com/balena-io/doxx",
   "dependencies": {
     "@resin.io/doxx-handlebars-helper": "^0.1.0",
     "@resin.io/doxx-utils": "^0.1.2",
