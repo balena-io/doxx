@@ -34,6 +34,7 @@
     "metalsmith-layouts": "^1.6.4",
     "metalsmith-markdown": "^0.2.1",
     "metalsmith-permalinks": "^0.5.0",
+    "metalsmith-prefixoid": "^1.0.3",
     "semver": "^5.3.0",
     "swig": "^1.4.2"
   },
