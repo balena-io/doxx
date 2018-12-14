@@ -4,6 +4,10 @@
 * Page titles can now use metaExtra information, which was only available to the page body previously.
 * README updated with more information.
 
+## 0.11.2 - 2018-12-13
+
+* Dependencies: Add missing metalsmith import [Dimitrios Lytras]
+
 ## 0.11.1 - 2018-11-06
 
 * Continue support for subpaths This is with reference to the dynamic pages dropdown switch generator using data-url-template attributes to pass URLs to client JS. [Chris Crocker-White]
