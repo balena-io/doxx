@@ -4,6 +4,10 @@
 * Page titles can now use metaExtra information, which was only available to the page body previously.
 * README updated with more information.
 
+## 0.11.3 - 2019-03-07
+
+* Dependencies: bump metalsmith-markdown version to latest to resolve issue where generated anchor links are invalid. [Chris Crocker-White]
+
 ## 0.11.2 - 2018-12-13
 
 * Dependencies: Add missing metalsmith import [Dimitrios Lytras]
