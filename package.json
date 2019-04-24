@@ -1,5 +1,5 @@
 {
-  "name": "@resin.io/doxx",
+  "name": "@balena.io/doxx",
   "version": "0.11.3",
   "description": "Doxx — a static docs generator with dynamic pages support.",
   "main": "index.js",
