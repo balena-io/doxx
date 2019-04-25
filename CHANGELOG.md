@@ -4,6 +4,10 @@
 * Page titles can now use metaExtra information, which was only available to the page body previously.
 * README updated with more information.
 
+## 0.11.4 - 2019-04-25
+
+* Update npm namespace [Juan Cruz Viotti]
+
 ## 0.11.3 - 2019-03-07
 
 * Dependencies: bump metalsmith-markdown version to latest to resolve issue where generated anchor links are invalid. [Chris Crocker-White]
