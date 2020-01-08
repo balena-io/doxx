@@ -26,7 +26,9 @@ module.exports = (config, navTree) ->
     obj = files[file]
     _.assign(obj, getValue(config.metaExtra, file, obj))
     title = obj.title or extractTitleFromText(obj.contents.toString())
+    excerpt = obj.excerpt
     obj.title = HbHelper.render(title, obj)
+    obj.excerpt = HbHelper.render(excerpt, obj)
     [ obj.ref, obj.ext ] = filenameToRef(file)
     fileByRef[obj.ref] = obj
 
