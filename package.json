@@ -4,7 +4,7 @@
   "description": "Doxx — a static docs generator with dynamic pages support.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"This repo has no tests specified.\" && exit 0"
   },
   "bin": {
     "doxx": "./doxx.js"
