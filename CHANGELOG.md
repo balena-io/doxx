@@ -4,6 +4,11 @@
 * Page titles can now use metaExtra information, which was only available to the page body previously.
 * README updated with more information.
 
+## 0.11.4 - 2020-01-09
+
+* Tests: Specify this repo has no tests [Gareth Davies]
+* Meta: Add support to expand variables in excerpt [Gareth Davies]
+
 ## 0.11.3 - 2019-03-07
 
 * Dependencies: bump metalsmith-markdown version to latest to resolve issue where generated anchor links are invalid. [Chris Crocker-White]
