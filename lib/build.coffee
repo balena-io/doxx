@@ -13,8 +13,8 @@ headings = require('metalsmith-headings')
 prefixoid = require('metalsmith-prefixoid')
 Plugins = require('./metalsmith-plugins')
 
-{ defaultPartialsSearch } = require('@resin.io/doxx-utils')
-HbHelper = require('@resin.io/doxx-handlebars-helper')
+{ defaultPartialsSearch } = require('@balena/doxx-utils')
+HbHelper = require('@balena/doxx-handlebars-helper')
 
 require('handlebars-helpers')({
   handlebars: HbHelper.Handlebars

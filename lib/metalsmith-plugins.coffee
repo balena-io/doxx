@@ -2,8 +2,8 @@ path = require('path')
 fs = require('fs')
 _ = require('lodash')
 
-HbHelper = require('@resin.io/doxx-handlebars-helper')
-{ walkFiles, walkTree } = require('@resin.io/doxx-utils')
+HbHelper = require('@balena/doxx-handlebars-helper')
+{ walkFiles, walkTree } = require('@balena/doxx-utils')
 
 LunrIndex = require('./lunr-index')
 Dicts = require('./dictionaries')
