@@ -1,6 +1,6 @@
 {
   "name": "@balena/doxx",
-  "version": "0.11.6",
+  "version": "1.0.0",
   "description": "Doxx — a static docs generator with dynamic pages support.",
   "main": "index.js",
   "scripts": {

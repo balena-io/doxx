@@ -1,4 +1,45 @@
 - commits:
+    - subject: Rename to @balena/doxx
+      hash: 402639739136137a30e5f1e3162b356ff6fb5b62
+      body: ''
+      footer:
+        Change-type: major
+        change-type: major
+      author: Pagan Gazzard
+      nested: []
+    - subject: Update dependencies
+      hash: 251d3e305cc75e3a79e6ab2292372fe7bf8ff0b9
+      body: |
+        Update @balena/doxx-handlebars-helper from 0.1.0 to 1.0.1
+        Update @balena/doxx-utils from 0.1.2 to 1.0.1
+        Update metalsmith-dynamic from 0.3.0 to 0.4.2
+      footer:
+        Change-type: minor
+        change-type: minor
+      author: Pagan Gazzard
+      nested:
+        - commits:
+            - subject: Add .versionbot/CHANGELOG.yml for nested changelogs
+              hash: 7a99f6df6d420d5be744151485d0e73144321094
+              body: ''
+              footer:
+                Change-type: patch
+                change-type: patch
+              author: Pagan Gazzard
+          version: metalsmith-dynamic-0.4.2
+          date: 2021-03-19T19:22:21.615Z
+        - commits:
+            - author: Pagan Gazzard
+              body: This avoids the needs to compile on every run
+              footers:
+                change-type: patch
+              hash: d5b5f743d9d5cad2e42de9ae93a2a9ed05279542
+              subject: Build coffeescript files before publishing
+          date: '2021-03-19T19:10:10Z'
+          version: metalsmith-dynamic-0.4.1
+  version: 1.0.0
+  date: 2021-03-19T20:16:24.109Z
+- commits:
     - subject: Add .version/CHANGELOG.yml for nested changelogs
       hash: c0709599f9785646372635344218b376dae82d34
       body: ''

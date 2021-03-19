@@ -4,6 +4,23 @@
 * Page titles can now use metaExtra information, which was only available to the page body previously.
 * README updated with more information.
 
+## 1.0.0 - 2021-03-19
+
+* Rename to @balena/doxx [Pagan Gazzard]
+
+<details>
+<summary> Update dependencies [Pagan Gazzard] </summary>
+
+> ### metalsmith-dynamic-0.4.2 - 2021-03-19
+> 
+> * Add .versionbot/CHANGELOG.yml for nested changelogs [Pagan Gazzard]
+> 
+> ### metalsmith-dynamic-0.4.1 - 2021-03-19
+> 
+> * Build coffeescript files before publishing [Pagan Gazzard]
+> 
+</details>
+
 # v0.11.6
 ## (2021-03-19)
 
