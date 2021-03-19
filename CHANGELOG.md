@@ -4,6 +4,11 @@
 * Page titles can now use metaExtra information, which was only available to the page body previously.
 * README updated with more information.
 
+# v0.11.5
+## (2021-03-19)
+
+* Build coffeescript files before publishing [Pagan Gazzard]
+
 ## 0.11.4 - 2020-01-09
 
 * Tests: Specify this repo has no tests [Gareth Davies]
