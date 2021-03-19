@@ -4,6 +4,11 @@
 * Page titles can now use metaExtra information, which was only available to the page body previously.
 * README updated with more information.
 
+# v0.11.6
+## (2021-03-19)
+
+* Add .version/CHANGELOG.yml for nested changelogs [Pagan Gazzard]
+
 # v0.11.5
 ## (2021-03-19)
 
