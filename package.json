@@ -1,5 +1,5 @@
 {
-  "name": "@resin.io/doxx",
+  "name": "@balena/doxx",
   "version": "0.11.6",
   "description": "Doxx — a static docs generator with dynamic pages support.",
   "main": "index.js",
@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/resin-io/doxx.git"
+    "url": "git://github.com/balena-io/doxx.git"
   },
   "author": "Eugene Mirotin <eugene@resin.io>",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/resin-io-playground/doxx/issues"
+    "url": "https://github.com/balena-io/doxx/issues"
   },
-  "homepage": "https://github.com/resin-io-playground/doxx",
+  "homepage": "https://github.com/balena-io/doxx",
   "dependencies": {
     "@balena/doxx-handlebars-helper": "^1.0.1",
     "@balena/doxx-utils": "^1.0.1",
