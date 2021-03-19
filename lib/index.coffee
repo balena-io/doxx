@@ -1,7 +1,7 @@
 _ = require('lodash')
 getConfig = require('./config')
 SwigHelper = require('./swig-helper')
-HbHelper = require('@resin.io/doxx-handlebars-helper')
+HbHelper = require('@balena/doxx-handlebars-helper')
 LunrSearch = require('./lunr-search')
 Nav = require('./nav')
 

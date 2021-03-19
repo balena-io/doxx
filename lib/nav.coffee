@@ -1,6 +1,6 @@
 fs = require('fs')
 _ = require('lodash')
-{ walkTree } = require('@resin.io/doxx-utils')
+{ walkTree } = require('@balena/doxx-utils')
 
 fixLinks = walkTree
   visitNode: (node) ->

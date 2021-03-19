@@ -1,0 +1,8 @@
+type: 'node'
+upstream:
+  - repo: '@balena/doxx-handlebars-helper'
+    url: 'https://github.com/balena-io-modules/doxx-handlebars-helper'
+  - repo: '@balena/doxx-utils'
+    url: 'https://github.com/balena-io-modules/doxx-utils'
+  - repo: 'metalsmith-dynamic'
+    url: 'https://github.com/balena-io-modules/metalsmith-dynamic'
