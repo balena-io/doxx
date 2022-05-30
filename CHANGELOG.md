@@ -4,6 +4,10 @@
 * Page titles can now use metaExtra information, which was only available to the page body previously.
 * README updated with more information.
 
+## 1.0.1 - 2022-05-30
+
+* patch: Exit the process when error is detected [Vipul Gupta]
+
 ## 1.0.0 - 2021-03-19
 
 * Rename to @balena/doxx [Pagan Gazzard]

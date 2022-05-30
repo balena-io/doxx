@@ -1,7 +1,20 @@
 - commits:
+    - subject: "patch: Exit the process when error is detected"
+      hash: cd6637ec5cd912a0d9157b93a0b90440ba816d46
+      body: "This change was needed because of errors going undetected when doxx was
+        being called to build the docs. Doxx would error out but the command
+        would still exit with exit code 1. This PR fixes things downstream:
+        https://github.com/balena-io/docs/pull/2304"
+      footer: {}
+      author: Vipul Gupta
+      nested: []
+  version: 1.0.1
+  title: "'patch: Exit the process when error is detected'"
+  date: 2022-05-30T13:44:12.127Z
+- commits:
     - subject: Rename to @balena/doxx
       hash: 402639739136137a30e5f1e3162b356ff6fb5b62
-      body: ''
+      body: ""
       footer:
         Change-type: major
         change-type: major
@@ -21,7 +34,7 @@
         - commits:
             - subject: Add .versionbot/CHANGELOG.yml for nested changelogs
               hash: 7a99f6df6d420d5be744151485d0e73144321094
-              body: ''
+              body: ""
               footer:
                 Change-type: patch
                 change-type: patch
@@ -35,14 +48,14 @@
                 change-type: patch
               hash: d5b5f743d9d5cad2e42de9ae93a2a9ed05279542
               subject: Build coffeescript files before publishing
-          date: '2021-03-19T19:10:10Z'
+          date: 2021-03-19T19:10:10Z
           version: metalsmith-dynamic-0.4.1
   version: 1.0.0
   date: 2021-03-19T20:16:24.109Z
 - commits:
     - subject: Add .version/CHANGELOG.yml for nested changelogs
       hash: c0709599f9785646372635344218b376dae82d34
-      body: ''
+      body: ""
       footer:
         Change-type: patch
         change-type: patch
@@ -51,85 +64,85 @@
   date: 2021-03-19T18:15:38.713Z
 - commits:
     - author: Eugene Mirotin
-      body: ''
+      body: ""
       hash: 870629a9d2db94914427a7e3cd3fb78d77e6315b
       subject: properly fail on unknown variables
-  date: '2016-06-10T16:22:25Z'
+  date: 2016-06-10T16:22:25Z
   version: 0.9.3
 - commits:
     - author: Eugene Mirotin
-      body: ''
+      body: ""
       hash: 0a824c3b63fb6bb5cf16d1449eb1c1831f0aa23a
       subject: convert examples to plain JS for better readability
     - author: Eugene Mirotin
-      body: ''
+      body: ""
       hash: ef7c78979c1607520cec842c0d8911ce8df0de32
       subject: changelog
-  date: '2016-06-08T10:19:10Z'
+  date: 2016-06-08T10:19:10Z
   version: 0.9.2
 - commits:
     - author: Eugene Mirotin
-      body: ''
+      body: ""
       hash: f8de976159b6d4f290f6e6bdfa1455d983b6b06a
       subject: improve and simplify nav filters
-  date: '2016-05-20T21:59:20Z'
+  date: 2016-05-20T21:59:20Z
   version: 0.9.0
 - commits:
     - author: Eugene Mirotin
-      body: ''
+      body: ""
       hash: 4d1f6de8168e837d4efe216e8a0296de718b1364
       subject: add Handlebars helpers
-  date: '2016-05-20T12:44:20Z'
+  date: 2016-05-20T12:44:20Z
   version: 0.8.0
 - commits:
     - author: Eugene Mirotin
-      body: ''
+      body: ""
       hash: 6882c01c6c461292f0a3cd2a66a8f99890ac8631
       subject: use doxx-utils
     - author: Eugene Mirotin
-      body: ''
+      body: ""
       hash: b3dd80f2f72a890ba8a5774b6b25c2454ef96e56
       subject: changelog
-  date: '2016-05-16T13:50:22Z'
+  date: 2016-05-16T13:50:22Z
   version: 0.7.0
 - commits:
     - author: Eugene Mirotin
-      body: ''
+      body: ""
       hash: c1af4763ae833b5de6a64511c496badb4e2dc44c
       subject: update to metalsmith-dynamic@0.2.0
-  date: '2016-05-16T10:20:14Z'
+  date: 2016-05-16T10:20:14Z
   version: 0.6.0
 - commits:
     - author: Eugene Mirotin
-      body: ''
+      body: ""
       hash: d7e4a2cb771a41d166ddc805e01921fce37f6f8e
       subject: use doxx-handlebars-helper
-  date: '2016-05-15T19:54:49Z'
+  date: 2016-05-15T19:54:49Z
   version: 0.5.0
 - commits:
     - author: Eugene Mirotin
-      body: ''
+      body: ""
       hash: 260500994c7f00ac16e78fe6f0b91c6064e43a47
       subject: use metalsmith-dynamic
     - author: Eugene Mirotin
-      body: ''
+      body: ""
       hash: 7a8478c6a4c465317b764a569e97c477fe436c40
       subject: use bugfixed version of metalsmith-dynamic
-  date: '2016-05-13T22:02:53Z'
+  date: 2016-05-13T22:02:53Z
   version: 0.4.0
 - commits:
     - author: Eugene Mirotin
-      body: ''
+      body: ""
       hash: 536d151c4e143e0906d5055e37ec4961f0c41543
       subject: fix search order generation
-  date: '2016-05-13T12:28:39Z'
+  date: 2016-05-13T12:28:39Z
   version: 0.3.1
 - commits:
     - author: Eugene Mirotin
-      body: ''
+      body: ""
       hash: 038a92f88edc43286205594f3a5cc62eeb45289f
       subject: cleanup refs-related code
-  date: '2016-05-13T10:50:51Z'
+  date: 2016-05-13T10:50:51Z
   version: 0.3.0
 - commits:
     - author: Eugene Mirotin
@@ -138,8 +151,8 @@
         * remove _details suffix
         * auto-generate partials search order
       hash: 7e3e1615b128fe53129e34e85fee57b7d2c373f3
-      subject: 'improve API:'
-  date: '2016-05-12T14:05:09Z'
+      subject: "improve API:"
+  date: 2016-05-12T14:05:09Z
   version: 0.2.0
 - commits:
     - author: Pagan Gazzard
@@ -148,52 +161,50 @@
         change-type: patch
       hash: 28200f036289208032cd0efa0b2ee8151b5eecfd
       subject: Build coffeescript files before publishing
-  date: '2021-03-19T18:07:31Z'
+  date: 2021-03-19T18:07:31Z
   version: 0.11.5
 - commits:
     - author: Gareth Davies
-      body: ''
+      body: ""
       footers:
         change-type: patch
         signed-off-by: Gareth Davies gareth@balena.io
       hash: 5e41643eea2810ddb216c7b68b816d9f75a6e57a
-      subject: 'meta: Add support to expand variables in excerpt'
+      subject: "meta: Add support to expand variables in excerpt"
     - author: Gareth Davies
-      body: ''
+      body: ""
       footers:
         change-type: patch
         signed-off-by: Gareth Davies gareth@balena.io
       hash: 8639e49522c035d0f0051d23d00a60d5f6767598
-      subject: 'tests: Specify this repo has no tests'
-  date: '2020-01-09T17:59:10Z'
+      subject: "tests: Specify this repo has no tests"
+  date: 2020-01-09T17:59:10Z
   version: 0.11.4
 - commits:
     - author: Chris Crocker-White
-      body: ''
+      body: ""
       footers:
         change-type: patch
         signed-off-by: Chris Crocker-White <chriscw@balena.io>
       hash: dc030315f34dafea6b966c97d6b1d82ab90d9358
-      subject: >-
-        Dependencies: bump metalsmith-markdown version to latest to resolve
-        issue where generated anchor links are invalid.
-  date: '2019-03-07T17:53:23Z'
+      subject: "Dependencies: bump metalsmith-markdown version to latest to resolve
+        issue where generated anchor links are invalid."
+  date: 2019-03-07T17:53:23Z
   version: 0.11.3
 - commits:
     - author: Dimitrios Lytras
-      body: ''
+      body: ""
       footers:
         change-type: patch
-        connects-to: '#25'
+        connects-to: "#25"
         signed-off-by: Dimitrios Lytras <dimitrios@balena.io>
       hash: dc5718f66e76fd498cc9eb1eb471d5f930d8f9d0
-      subject: 'dependencies: Add missing metalsmith import'
-  date: '2018-12-14T13:14:16Z'
+      subject: "dependencies: Add missing metalsmith import"
+  date: 2018-12-14T13:14:16Z
   version: 0.11.2
 - commits:
     - author: Chris Crocker-White
-      body: >-
-        This is with reference to the dynamic pages dropdown switch generator
+      body: This is with reference to the dynamic pages dropdown switch generator
         using data-url-template attributes to pass URLs to client JS.
       footers:
         change-type: patch
@@ -201,10 +212,10 @@
       hash: 24aab9d105d436bf7e77c245d494fab00e85840f
       subject: Continue support for subpaths
     - author: Chris Crocker-White
-      body: ''
+      body: ""
       hash: e01d25e52242da7eded3a862d42d309fb2b94ce5
       subject: Merge branch 'master' into path-support
-  date: '2018-11-06T19:24:03Z'
+  date: 2018-11-06T19:24:03Z
   version: 0.11.1
 - commits:
     - author: John (Jack) Brown
@@ -217,12 +228,11 @@
         signed-off-by: Jack Brown <jack@balena.io>
       hash: 8ec2f790618c98d681d10c897d0af6170fe1a453
       subject: Add support for subpaths
-  date: '2018-10-24T15:18:24Z'
+  date: 2018-10-24T15:18:24Z
   version: 0.11.0
 - commits:
     - author: Zach Walchuk
-      body: >-
-        Previously, the metaExtra information was pulled in as the last piece of
+      body: Previously, the metaExtra information was pulled in as the last piece of
         populateFileMeta. This pulls it in before the titles are generated so
         that variables defined in metaExtra can be used to populate titles.
       footers:
@@ -230,22 +240,21 @@
       hash: ffe41f340aac5f4898009d9abbaf4e6f42442c29
       subject: Pull in metaExtra before generating titles
     - author: martinalexrolph
-      body: >-
-        We're using Doxx for Overlock's documentation (https://overlock.io) and
-        I wrote a short guide some of the main features of Doxx in that repo. I
+      body: We're using Doxx for Overlock's documentation (https://overlock.io) and I
+        wrote a short guide some of the main features of Doxx in that repo. I
         figured that documentation would be useful to others using Doxx.
       hash: 85fa6bc85bcc05bac0f66c98472cd7819154d111
       subject: Add documentation to README.md
     - author: zwalchuk
-      body: ''
+      body: ""
       hash: 426e2fb3cb31933dd545542f25fd00eb7c2e8c15
       subject: Update README.md
-  date: '2018-04-04T20:14:34Z'
+  date: 2018-04-04T20:14:34Z
   version: 0.10.1
 - commits:
     - author: Eugene Mirotin
-      body: ''
+      body: ""
       hash: f358fca328b8ef508332b073e033e05223a5831c
-      subject: 'fix #15 - add semver block helpers'
-  date: '2016-12-07T20:27:18Z'
+      subject: "fix #15 - add semver block helpers"
+  date: 2016-12-07T20:27:18Z
   version: 0.10.0
