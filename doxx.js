@@ -13,7 +13,7 @@ var Doxx = require('./index')
 
 Doxx(config).build(function(err) {
   if (err) {
-    console.err(err)
+    console.error(err)
     process.exit(1)
   }
 })
