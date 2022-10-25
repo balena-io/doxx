@@ -1,4 +1,20 @@
 - commits:
+    - subject: Change console.err to console.error
+      hash: 3da77219e6babeebebd0aa5b5a5d66ab441ad5fc
+      body: ""
+      footer:
+        Changelog-entry: Change console.err to console.error
+        changelog-entry: Change console.err to console.error
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: zoobot <rommims@gmail.com>
+        signed-off-by: zoobot <rommims@gmail.com>
+      author: zoobot
+      nested: []
+  version: 1.0.2
+  title: "'Fix console.error'"
+  date: 2022-10-25T13:50:16.972Z
+- commits:
     - subject: "patch: Exit the process when error is detected"
       hash: cd6637ec5cd912a0d9157b93a0b90440ba816d46
       body: "This change was needed because of errors going undetected when doxx was

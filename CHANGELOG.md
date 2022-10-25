@@ -4,6 +4,10 @@
 * Page titles can now use metaExtra information, which was only available to the page body previously.
 * README updated with more information.
 
+## 1.0.2 - 2022-10-25
+
+* Change console.err to console.error [zoobot]
+
 ## 1.0.1 - 2022-05-30
 
 * patch: Exit the process when error is detected [Vipul Gupta]
