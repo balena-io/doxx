@@ -4,6 +4,10 @@
 * Page titles can now use metaExtra information, which was only available to the page body previously.
 * README updated with more information.
 
+## 1.0.3 - 2022-12-28
+
+* patch: Add Flowzone [Vipul Gupta (@vipulgupta2048)]
+
 ## 1.0.2 - 2022-10-25
 
 * Change console.err to console.error [zoobot]

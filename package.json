@@ -1,6 +1,6 @@
 {
   "name": "@balena/doxx",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Doxx — a static docs generator with dynamic pages support.",
   "main": "index.js",
   "scripts": {
@@ -44,6 +44,6 @@
     "watch": "^0.18.0"
   },
   "versionist": {
-    "publishedAt": "2022-10-25T13:50:17.067Z"
+    "publishedAt": "2022-12-28T08:53:28.010Z"
   }
 }

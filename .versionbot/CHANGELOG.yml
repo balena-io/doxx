@@ -1,4 +1,16 @@
 - commits:
+    - subject: "patch: Add Flowzone"
+      hash: 8ac851c1afa92fbd6095d8f1c4e7ca5f7506be6a
+      body: ""
+      footer:
+        Signed-off-by: Vipul Gupta (@vipulgupta2048) <vipul@balena.io>
+        signed-off-by: Vipul Gupta (@vipulgupta2048) <vipul@balena.io>
+      author: Vipul Gupta (@vipulgupta2048)
+      nested: []
+  version: 1.0.3
+  title: ""
+  date: 2022-12-28T08:53:27.880Z
+- commits:
     - subject: Change console.err to console.error
       hash: 3da77219e6babeebebd0aa5b5a5d66ab441ad5fc
       body: ""
