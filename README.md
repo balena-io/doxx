@@ -49,7 +49,7 @@ This will look in the shared folder with the name of the snippet and import file
 
 1) **Exact matches**: Doxx will first look for a file of the form `variable1+variable2.md`. For example, in a page where the user can choose an OS and a language, if the user has chosen `osx` and `javascript` then Doxx will import the file `osx+javascript.md`. The order is important here: it is the order defined in the variables list in the header of the dynamic page.
 
-2) **Matches for a single variable**: if there is no file with that name, Doxx will then look for a file of the form `variable1.md` and then `variable2.md`. For the example above, if a file called `osx.md` exists then Doxx withj import that, and if not then it will look for and import a file called `javascript.md`. Again the order of precedence is determined by the order the variables are defined in the header.
+2) **Matches for a single variable**: if there is no file with that name, Doxx will then look for a file of the form `variable1.md` and then `variable2.md`. For the example above, if a file called `osx.md` exists then Doxx will import that, and if not then it will look for and import a file called `javascript.md`. Again the order of precedence is determined by the order the variables are defined in the header.
 
 3) **Default**: if no exact or partial match is found, Doxx imports `_default.md`.
 
