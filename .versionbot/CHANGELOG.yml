@@ -1,4 +1,15 @@
 - commits:
+    - subject: "patch: Add License Signed-off-by: Shaun Mulligan (@shaunmulligan)
+        <shaun@balena.io>"
+      hash: e73eb99fb7d60371b1a600546d0fe1814f1af3d5
+      body: ""
+      footer: {}
+      author: Shaun Mulligan
+      nested: []
+  version: 1.0.4
+  title: ""
+  date: 2025-11-04T17:34:05.062Z
+- commits:
     - subject: "patch: Add Flowzone"
       hash: 8ac851c1afa92fbd6095d8f1c4e7ca5f7506be6a
       body: ""
